@@ -1,0 +1,40 @@
+G8 EXPERIMENT SUMMARY: Bayesian Neural Network with Uncertainty Quantification
+==============================================================================
+
+METHODOLOGY:
+- Preprocessing: EMSC + Savitzky-Golay derivatives + Advanced spectral features  
+- Algorithm: Bayesian Neural Network with Monte Carlo Dropout
+- Architecture: 24,193 parameters
+- Uncertainty: Epistemic + Aleatoric uncertainty quantification
+
+DATASET:
+- Training samples: 859
+- Test samples: 215
+- Features: 100 (multi-scale processed)
+- Classes: Female, Male
+
+PERFORMANCE RESULTS:
+- Test Accuracy: 0.5395
+- AUC Score: 0.5465
+- CV Mean: 0.5006 ± 0.0079
+
+UNCERTAINTY QUANTIFICATION:
+- Mean Epistemic Uncertainty: 0.1376
+- Mean Aleatoric Uncertainty: 0.2329
+- Mean Total Uncertainty: 0.3706
+- Prediction Interval Coverage: 0.0000
+- Mean Interval Width: 0.5043
+
+RELIABILITY ANALYSIS:
+- Low Uncertainty Accuracy: 0.5370
+- High Uncertainty Accuracy: 0.5000
+
+TECHNICAL DETAILS:
+- Training Time: 2.4 seconds
+- Architecture: 100 → 128 → 64 → 32 → 1
+- Dropout Rate: 0.2
+- Monte Carlo Samples: 100
+
+FILES GENERATED:
+- G8_bayesian_nn_model.h5 (trained model)
+- G8_experimental_results.json (complete results)

@@ -1,0 +1,37 @@
+
+G6 EXPERIMENT SUMMARY: SNV + Optimized + Transfer Learning
+==========================================================
+
+METHODOLOGY:
+- Preprocessing: SNV + Optimized Feature Selection + Transfer Learning Scaling
+- Algorithm: Transfer Learning with Autoencoder Pre-training
+- Models: Deep Transfer + Ensemble (RF, SVM, LR)
+
+DATASET:
+- Training samples: 859
+- Test samples: 215
+- Features: 150 optimized transfer learning features
+- Classes: Female, Male
+
+MODEL RESULTS:
+- Deep Transfer: 0.5116
+- Random Forest: 0.5116
+- Svm: 0.5349
+- Logistic Regression: 0.4837
+- Ensemble: 0.5488
+
+BEST MODEL: Ensemble
+BEST ACCURACY: 0.5488
+
+TRANSFER LEARNING PIPELINE:
+1. Autoencoder pre-training for feature learning
+2. Transfer classifier with fine-tuning
+3. Ensemble models on encoded features
+4. Multi-model evaluation and selection
+
+FILES GENERATED:
+- G6_autoencoder.h5 (pre-trained autoencoder)
+- G6_encoder.h5 (feature extractor)
+- G6_transfer_classifier.h5 (transfer classifier)
+- G6_classical_models.pkl (ensemble models)
+- G6_experimental_results.json (complete results)

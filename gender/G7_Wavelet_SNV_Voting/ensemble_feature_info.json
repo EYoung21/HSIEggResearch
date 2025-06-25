@@ -1,0 +1,35 @@
+{
+  "feature_sets": {
+    "snv_sg": {
+      "n_features": 50,
+      "preprocessing": "SNV normalization + SG derivatives"
+    },
+    "wavelet": {
+      "n_features": 10,
+      "preprocessing": "db4 wavelet, 3 levels"
+    },
+    "combined": {
+      "n_features": 175,
+      "preprocessing": "SNV+SG + Wavelets + Statistical"
+    },
+    "snv_minmax": {
+      "n_features": 50,
+      "preprocessing": "SNV + SG + MinMax normalization"
+    },
+    "snv_robust": {
+      "n_features": 50,
+      "preprocessing": "SNV + SG + Robust scaling"
+    }
+  },
+  "total_sets": 5,
+  "preprocessing_methods": [
+    "SNV + Savitzky-Golay",
+    "Wavelet Decomposition",
+    "Combined Features",
+    "Multi-scale Normalization"
+  ],
+  "wavelet_config": {
+    "wavelet": "db4",
+    "decomp_levels": 3
+  }
+}

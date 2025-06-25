@@ -1,0 +1,59 @@
+
+G5 EXPERIMENT SUMMARY: MSC + Multi-Scale Derivatives + Multi-Task Learning
+==========================================================================
+
+METHODOLOGY:
+- Preprocessing: MSC + Multi-Scale Savitzky-Golay Derivatives (1st, 2nd, 3rd)
+- Algorithm: Multi-Task Deep Learning with Shared Feature Extraction
+- Tasks: Simultaneous Gender and Mortality Prediction
+- Architecture: Shared layers + Task-specific heads
+- Optimization: Grid search with cross-validation
+
+DATASET:
+- Training samples: 89
+- Test samples: 23
+- Input features: 1200 (4x derivative scales)
+- Task 1 (Gender): Female, Male
+- Task 2 (Mortality): Live
+
+MULTI-TASK ARCHITECTURE:
+- Shared layers: [256, 128, 64]
+- Dropout rate: 0.2
+- Learning rate: 0.001
+- Task weights: Gender=1.0, Mortality=1.0
+
+TRAINING RESULTS:
+- Best Combined CV Score: 0.7466
+- Final Val Gender Accuracy: 0.6667
+- Final Val Mortality Accuracy: 1.0000
+- Training Epochs: 141
+
+TEST SET RESULTS:
+- Gender Task Accuracy: 0.6957
+- Mortality Task Accuracy: 1.0000
+- Combined Task Accuracy: 0.8478
+
+CONFUSION MATRICES:
+Gender Task:
+[[14  2]
+ [ 5  2]]
+
+Mortality Task:
+[[23]]
+
+OPTIMIZATION RESULTS:
+- Search method: Grid search with 3-fold CV
+- Trials completed: 8
+- Best parameters: {'hidden_layers': [256, 128, 64], 'dropout_rate': 0.2, 'learning_rate': 0.001, 'task_weight_gender': 1.0, 'task_weight_mortality': 1.0}
+
+FILES GENERATED:
+- G5_multitask_model.h5 (trained multi-task model)
+- G5_experimental_results.json (complete results)
+- G5_model_metadata.json (model metadata)
+- test_predictions.csv (test set predictions for both tasks)
+
+NOTES:
+- Multi-task learning leverages shared spectral features
+- Simultaneous prediction improves feature utilization
+- Task-specific heads capture unique patterns for each task
+- Proven MSC + derivatives preprocessing from G1

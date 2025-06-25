@@ -1,0 +1,40 @@
+G7 EXPERIMENT SUMMARY: Wavelet + SNV + Voting Ensemble
+=======================================================
+
+METHODOLOGY:
+- Preprocessing: Wavelet decomposition + SNV normalization + Multi-path features
+- Algorithm: Advanced Voting Ensemble
+- Feature Sets: 5 different preprocessing approaches
+- Models: 40 total models (base + ensemble)
+
+DATASET:
+- Training samples: 859
+- Test samples: 215
+- Classes: Female, Male
+
+BEST MODEL: snv_sg_gradient_boosting
+BEST ACCURACY: 0.5349
+
+Top 5 Base Models:
+- snv_sg_gradient_boosting: 0.5349
+- wavelet_naive_bayes: 0.5349
+- snv_minmax_gradient_boosting: 0.5349
+- snv_robust_gradient_boosting: 0.5349
+- combined_naive_bayes: 0.5256
+
+Ensemble Models (10):
+- snv_minmax_hard_voting: 0.5116
+- wavelet_soft_voting: 0.5070
+- wavelet_hard_voting: 0.5023
+- combined_soft_voting: 0.5023
+- snv_sg_soft_voting: 0.4837
+- snv_minmax_soft_voting: 0.4837
+- snv_robust_hard_voting: 0.4837
+- snv_robust_soft_voting: 0.4837
+- snv_sg_hard_voting: 0.4698
+- combined_hard_voting: 0.4605
+
+FILES GENERATED:
+- G7_voting_ensemble_models.pkl (all trained models)
+- G7_experimental_results.json (complete results)
+- G7_performance_summary.txt (this summary)

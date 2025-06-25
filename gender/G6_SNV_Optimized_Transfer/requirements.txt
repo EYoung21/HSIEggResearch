@@ -1,0 +1,32 @@
+# G6 Experiment Requirements: SNV + Optimized + Transfer Learning
+# Advanced transfer learning approach for HSI gender prediction
+
+# Core scientific computing
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+
+# Machine learning and preprocessing
+scikit-learn>=1.0.0
+
+# Deep learning and transfer learning
+tensorflow>=2.8.0
+
+# Model persistence and data handling
+joblib>=1.1.0
+
+# Optional: Visualization (if needed for analysis)
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Optional: Progress tracking
+tqdm>=4.62.0
+
+# Development and testing
+pytest>=6.0.0
+
+# Note: This experiment implements transfer learning with:
+# - Autoencoder pre-training for feature learning
+# - Deep transfer learning with fine-tuning
+# - Ensemble methods with encoded features
+# - Advanced preprocessing optimization 

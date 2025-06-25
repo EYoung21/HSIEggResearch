@@ -1,0 +1,22 @@
+{
+  "emsc_order": 2,
+  "sg_window_length": 15,
+  "sg_polyorder": 2,
+  "derivative_orders": [
+    0,
+    1,
+    2
+  ],
+  "n_original_features": 300,
+  "n_selected_features": 50,
+  "n_final_features": 100,
+  "feature_selection_method": "f_classif",
+  "wavelength_range": [
+    374.14,
+    1015.32
+  ],
+  "scaling_methods": [
+    "StandardScaler",
+    "RobustScaler"
+  ]
+}
