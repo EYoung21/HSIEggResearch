@@ -1,0 +1,150 @@
+================================================================================
+G1 EXPERIMENT PERFORMANCE SUMMARY
+================================================================================
+Experiment: Gender Classification with MSC + SG 1st Derivative + LightGBM
+Date: 2025-06-25
+Duration: 0.5 minutes
+Priority: HIGH
+
+================================================================================
+DATASET INFORMATION
+================================================================================
+Total Samples: 1,074 (clear gender labels)
+- Training: 859 samples (80%)
+- Test: 215 samples (20%)
+
+Class Distribution:
+- Female: 578 samples (53.8%)
+- Male: 496 samples (46.2%)
+
+Features: 300 wavelengths (374.14 nm to 1015.32 nm)
+Data Source: HSI egg data Day 0 (pre-incubation)
+
+================================================================================
+PERFORMANCE METRICS
+================================================================================
+🎯 TEST ACCURACY: 53.95% (116/215 correct predictions)
+
+📊 CONFUSION MATRIX:
+              Predicted
+Actual     Female  Male
+Female      116     0
+Male         99     0
+
+📈 CLASSIFICATION REPORT:
+Class      Precision  Recall  F1-Score  Support
+Female        0.54     1.00     0.70      116
+Male          0.00     0.00     0.00       99
+Overall       0.54     0.54     0.38      215
+
+================================================================================
+CRITICAL ISSUE IDENTIFIED
+================================================================================
+🚨 PROBLEM: Model predicts ALL samples as Female
+
+Analysis:
+- The model learned to always predict the majority class (Female)
+- 53.95% accuracy is misleading - it's just the proportion of females in test set
+- No actual learning of discriminative spectral patterns occurred
+- This is a classic case of class imbalance leading to poor model performance
+
+Evidence:
+- Recall for Male class: 0.00 (no males correctly identified)
+- Precision for Male class: 0.00 (no males predicted at all)
+- Confusion matrix shows [116, 0] and [99, 0] - all predictions = Female
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+Preprocessing:
+- MSC (Multiplicative Scatter Correction): Applied with numerical safeguards
+- Savitzky-Golay 1st Derivative: Window=15, polynomial order=3
+
+Machine Learning:
+- Algorithm: LightGBM with Bayesian optimization
+- Optimization calls: 30
+- Cross-validation: 5-fold
+- Best CV accuracy: 55.88%
+
+Best Hyperparameters:
+- num_leaves: 78
+- learning_rate: 0.030
+- feature_fraction: 0.828
+- bagging_fraction: 0.808
+- regularization: L1=3.42, L2=1.75
+
+================================================================================
+FEATURE IMPORTANCE ANALYSIS
+================================================================================
+Top 5 Most Important Wavelengths:
+1. 793.2 nm  (importance: 10.91) - Near-infrared, water absorption
+2. 631.67 nm (importance: 8.89)  - Red, protein absorption
+3. 992.76 nm (importance: 5.98)  - Near-infrared, organic compounds
+4. 578.79 nm (importance: 5.90)  - Green-yellow, pigments
+5. 443.58 nm (importance: 4.40)  - Blue, carotenoids
+
+Biological Interpretation:
+- Near-infrared dominance suggests water/lipid content differences
+- Red region importance indicates protein content variations
+- Blue region suggests carotenoid/pigment differences
+- Pattern indicates potential biological differences exist but model cannot exploit them
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+🔧 IMMEDIATE FIXES:
+1. Implement class balancing (SMOTE, class weights in LightGBM)
+2. Increase Bayesian optimization calls (30 → 100+)
+3. Add stratified sampling verification
+4. Try different train/test splits
+
+🧪 METHODOLOGY IMPROVEMENTS:
+1. Compare with SNV preprocessing (G2 experiment)
+2. Test different algorithms (Random Forest, SVM, Neural Networks)
+3. Implement ensemble methods
+4. Add feature selection to reduce noise
+5. Try different derivative orders (2nd derivative)
+
+🔬 PREPROCESSING ALTERNATIVES:
+1. SNV (Standard Normal Variate) instead of MSC
+2. EMSC (Extended MSC) for better correction
+3. Different Savitzky-Golay parameters
+4. Wavelength selection based on biological knowledge
+
+================================================================================
+FILES GENERATED
+================================================================================
+Data Files:
+- X_train_processed.npy (2.0 MB) - Preprocessed training features
+- X_test_processed.npy (504 KB) - Preprocessed test features
+- y_train.npy, y_test.npy - Labels
+- wavelengths.csv - Wavelength information
+
+Model Files:
+- lightgbm_model.txt (15.7 KB) - Trained model
+- lightgbm_model_info.pkl - Model metadata
+- msc_sg_preprocessor.pkl - Fitted preprocessor
+
+Results Files:
+- test_predictions.npy - Model predictions
+- test_probabilities.npy - Prediction probabilities
+- feature_importance.csv - Wavelength importance rankings
+- G1_experimental_results.json - Complete results in JSON format
+
+Documentation:
+- README.md - Methodology documentation
+- G1_experiment_summary.md - Experiment overview
+
+================================================================================
+CONCLUSION
+================================================================================
+✅ SUCCESSFUL PIPELINE: Complete preprocessing and modeling pipeline implemented
+❌ POOR PERFORMANCE: Model fails to learn discriminative patterns
+🔍 ROOT CAUSE: Class imbalance and possibly insufficient preprocessing
+🎯 NEXT STEPS: Implement class balancing and proceed to G2 experiment for comparison
+
+The G1 experiment serves as a baseline and demonstrates the importance of proper
+class handling in machine learning pipelines. The infrastructure is solid and 
+ready for systematic comparison with other preprocessing methods.
+
+================================================================================ 

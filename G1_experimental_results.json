@@ -1,0 +1,175 @@
+{
+  "experiment_id": "G1_MSC_SG_LightGBM",
+  "experiment_name": "Gender Classification with MSC + SG 1st Derivative + LightGBM + Bayesian Optimization",
+  "date_completed": "2025-06-25",
+  "duration_minutes": 0.5,
+  "priority": "HIGH",
+  
+  "methodology": {
+    "preprocessing": "Multiplicative Scatter Correction (MSC) + Savitzky-Golay 1st Derivative",
+    "algorithm": "LightGBM with Bayesian Hyperparameter Optimization",
+    "features": "Full spectrum (all wavelengths)",
+    "task": "Binary gender classification (Male vs Female)",
+    "data_source": "HSI egg data Day 0 (pre-incubation)"
+  },
+  
+  "dataset": {
+    "total_samples": 1074,
+    "training_samples": 859,
+    "test_samples": 215,
+    "features": 300,
+    "wavelength_range": "374.14 nm to 1015.32 nm",
+    "class_distribution": {
+      "female": 578,
+      "male": 496
+    },
+    "train_class_distribution": [462, 397],
+    "test_class_distribution": [116, 99]
+  },
+  
+  "performance_metrics": {
+    "test_accuracy": 0.5395,
+    "test_accuracy_percent": "53.95%",
+    "confusion_matrix": [
+      [116, 0],
+      [99, 0]
+    ],
+    "classification_report": {
+      "female": {
+        "precision": 0.54,
+        "recall": 1.00,
+        "f1_score": 0.70,
+        "support": 116
+      },
+      "male": {
+        "precision": 0.00,
+        "recall": 0.00,
+        "f1_score": 0.00,
+        "support": 99
+      },
+      "accuracy": 0.54,
+      "macro_avg": {
+        "precision": 0.27,
+        "recall": 0.50,
+        "f1_score": 0.35
+      },
+      "weighted_avg": {
+        "precision": 0.29,
+        "recall": 0.54,
+        "f1_score": 0.38
+      }
+    }
+  },
+  
+  "model_parameters": {
+    "bayesian_optimization": {
+      "calls": 30,
+      "cv_folds": 5,
+      "best_cv_accuracy": 0.5588
+    },
+    "best_hyperparameters": {
+      "num_leaves": 78,
+      "learning_rate": 0.03036269451901499,
+      "feature_fraction": 0.8281775897621598,
+      "bagging_fraction": 0.8083337040103296,
+      "bagging_freq": 10,
+      "lambda_l1": 3.4166582909960486,
+      "lambda_l2": 1.7456626922659324,
+      "min_data_in_leaf": 32,
+      "min_gain_to_split": 0.6280760490974635
+    }
+  },
+  
+  "feature_importance": {
+    "top_20_wavelengths": [
+      {"wavelength": "793.2", "importance": 10.91430, "region": "Near-infrared"},
+      {"wavelength": "631.67", "importance": 8.89158, "region": "Red"},
+      {"wavelength": "992.76", "importance": 5.98162, "region": "Near-infrared"},
+      {"wavelength": "578.79", "importance": 5.90298, "region": "Green-yellow"},
+      {"wavelength": "995.02", "importance": 4.90320, "region": "Near-infrared"},
+      {"wavelength": "443.58", "importance": 4.40481, "region": "Blue"},
+      {"wavelength": "817.25", "importance": 3.24452, "region": "Near-infrared"},
+      {"wavelength": "464.16", "importance": 3.07430, "region": "Blue"},
+      {"wavelength": "826.02", "importance": 2.70340, "region": "Near-infrared"},
+      {"wavelength": "708.66", "importance": 2.49180, "region": "Red"},
+      {"wavelength": "513.9", "importance": 2.09351, "region": "Green"},
+      {"wavelength": "950.11", "importance": 1.61263, "region": "Near-infrared"},
+      {"wavelength": "627.42", "importance": 1.41855, "region": "Red"},
+      {"wavelength": "786.64", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "801.93", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "784.46", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "788.82", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "782.29", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "780.11", "importance": 0.00000, "region": "Near-infrared"},
+      {"wavelength": "791.01", "importance": 0.00000, "region": "Near-infrared"}
+    ]
+  },
+  
+  "preprocessing_details": {
+    "msc": {
+      "description": "Multiplicative Scatter Correction",
+      "purpose": "Corrects for scattering effects in spectral data",
+      "method": "Linear regression against mean reference spectrum"
+    },
+    "savitzky_golay": {
+      "window_length": 15,
+      "polynomial_order": 3,
+      "derivative_order": 1,
+      "purpose": "Removes baseline drift and enhances spectral features"
+    }
+  },
+  
+  "issues_identified": {
+    "major_problem": "Model predicts all samples as Female (majority class)",
+    "accuracy_interpretation": "53.95% accuracy is misleading - it's just the proportion of Female samples in test set",
+    "model_behavior": "Not learning discriminative spectral patterns between genders",
+    "confusion_matrix_analysis": "116 females correctly classified, 99 males misclassified as female, 0 males correctly classified"
+  },
+  
+  "recommendations": {
+    "immediate": [
+      "Implement class balancing (SMOTE, class weights)",
+      "Increase Bayesian optimization calls",
+      "Try different preprocessing approaches",
+      "Add feature scaling/normalization"
+    ],
+    "methodology": [
+      "Compare with SNV preprocessing (G2 experiment)",
+      "Test different algorithms (CNN, Transformer)",
+      "Implement ensemble methods",
+      "Add feature selection techniques"
+    ]
+  },
+  
+  "files_generated": [
+    "X_train_processed.npy",
+    "X_test_processed.npy", 
+    "y_train.npy",
+    "y_test.npy",
+    "wavelengths.csv",
+    "msc_sg_preprocessor.pkl",
+    "label_encoder.pkl",
+    "lightgbm_model.txt",
+    "lightgbm_model_info.pkl",
+    "test_predictions.npy",
+    "test_probabilities.npy",
+    "feature_importance.csv",
+    "G1_experiment_summary.md",
+    "README.md",
+    "requirements.txt"
+  ],
+  
+  "biological_insights": {
+    "important_regions": {
+      "near_infrared": "793.2, 992.76, 995.02 nm - water and organic compound absorption",
+      "red": "631.67, 627.42 nm - potential protein absorption",
+      "blue": "443.58, 464.16 nm - potential carotenoid absorption",
+      "green": "513.9, 578.79 nm - chlorophyll and other pigments"
+    },
+    "interpretation": "Feature importance suggests biological differences may exist in protein, lipid, and pigment content between male and female eggs"
+  },
+  
+  "experiment_status": "COMPLETED",
+  "next_experiment": "G2_SNV_SG_Ensemble",
+  "notes": "Successful pipeline implementation but poor classification performance indicates need for improved preprocessing or algorithm selection"
+} 

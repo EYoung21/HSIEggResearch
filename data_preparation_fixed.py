@@ -39,14 +39,18 @@ def clean_labels(df):
     
     # Mortality cleaning  
     mortality_mapping = {
-        'L': 'Live', 'D': 'Dead', 'Live': 'Live', 'Dead': 'Dead'
+        'L': 'Live', 'D': 'Dead', 'Live': 'Live', 'Dead': 'Dead',
+        'live': 'Live', 'Still alive': 'Live',
+        'Possibly still alive - left in incubator': 'Live',
+        'Dead embryo': 'Dead', 'Early dead': 'Dead',
+        'Late dead; cannot tell': 'Dead'
     }
-    df['Mortality_clean'] = df['Mortality'].map(mortality_mapping)
+    df['Mortality_clean'] = df['Mortality status'].map(mortality_mapping)
     
     # Print cleaning results
     print(f"Gender - Before: {df['Gender'].value_counts().to_dict()}")
     print(f"Gender - After: {df['Gender_clean'].value_counts().to_dict()}")
-    print(f"Mortality - Before: {df['Mortality'].value_counts().to_dict()}")
+    print(f"Mortality - Before: {df['Mortality status'].value_counts().to_dict()}")
     print(f"Mortality - After: {df['Mortality_clean'].value_counts().to_dict()}")
     
     return df

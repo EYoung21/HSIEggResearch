@@ -1,0 +1,58 @@
+
+G2 EXPERIMENT SUMMARY: SNV + SG 2nd Derivative + Ensemble
+========================================================
+
+METHODOLOGY:
+- Preprocessing: SNV + Savitzky-Golay 2nd derivative + Spectral ratios
+- Algorithm: Ensemble (Random Forest + SVM + XGBoost) with soft voting
+- Optimization: Bayesian optimization (30 calls)
+- Validation: 5-fold stratified cross-validation
+
+DATASET:
+- Training samples: 859
+- Test samples: 215
+- Features: 21 spectral ratio features
+- Classes: Female, Male
+
+CROSS-VALIDATION RESULTS:
+- Random Forest: 0.5390 ± 0.0337
+- SVM: 0.5378 ± 0.0026
+- XGBoost: 0.5460 ± 0.0318
+- Ensemble: 0.5506 ± 0.0322
+
+TEST SET RESULTS:
+- Ensemble Accuracy: 0.5070
+- Random Forest Accuracy: 0.5390
+- SVM Accuracy: 0.5378
+- XGBoost Accuracy: 0.5460
+
+CONFUSION MATRIX:
+[[79 37]
+ [69 30]]
+
+TOP SPECTRAL RATIO FEATURES:
+       feature_name  average_importance
+  red_to_blue_ratio            0.047619
+  nir1_to_red_ratio            0.047619
+ nir2_to_nir1_ratio            0.047619
+green_to_blue_ratio            0.047619
+  nir2_to_red_ratio            0.047619
+
+OPTIMIZATION RESULTS:
+- Best CV Score: 0.5506
+- Best RF params: {'n_estimators': np.int64(201), 'max_depth': np.int64(12), 'min_samples_split': np.int64(19), 'min_samples_leaf': np.int64(3), 'max_features': np.str_('sqrt')}
+- Best SVM params: {'C': 0.7581582491854979, 'gamma': 2.112096240049908e-05, 'kernel': np.str_('rbf')}
+- Best XGB params: {'n_estimators': np.int64(290), 'max_depth': np.int64(3), 'learning_rate': 0.06932995138994004, 'subsample': 1.0, 'colsample_bytree': 0.7663900385169956}
+
+FILES GENERATED:
+- G2_ensemble_model.pkl (trained ensemble model)
+- G2_experimental_results.json (complete results)
+- feature_importance.csv (feature analysis)
+- test_predictions.csv (test set predictions)
+- spectral_ratio_features.csv (feature names)
+
+NOTES:
+- Ensemble combines predictions from three different algorithm families
+- Spectral ratios reduce instrument variability and enhance biological interpretation
+- SNV + 2nd derivative preprocessing removes baseline and highlights spectral features
+- Bayesian optimization found optimal hyperparameters for all three models

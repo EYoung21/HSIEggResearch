@@ -1,16 +1,20 @@
-# HSI Research Data Protection - ABSOLUTELY NO DATA IN GIT
-# ================================================================
+# HSI Research Data Protection - EXCLUDE PROPRIETARY DATA, KEEP EXPERIMENT RESULTS
+# =================================================================================
 
-# Excel files (original data)
+# PROPRIETARY DATA - NEVER COMMIT
+# ================================
+
+# Original Excel files (source data)
 *.xlsx
 *.xls
 *.xlsm
 *.xlsb
 
-# CSV files (converted data)
+# Converted CSV files (spectral data)
 *.csv
+!requirements.txt
 
-# All data directories
+# Data directories with raw/processed spectral data
 data/
 Data/
 DATA/
@@ -18,21 +22,27 @@ raw_data/
 processed_data/
 datasets/
 
-# Numpy arrays and processed data
+# Numpy arrays containing actual spectral measurements
 *.npy
 *.npz
 
-# Any other data formats
+# Trained models (contain learned patterns from proprietary data)
+*.pkl
+*.joblib
+*_model.txt
+lightgbm_model.txt
+*.model
+*.h5
+
+# Other proprietary data formats
 *.mat
 *.h5
 *.hdf5
 *.parquet
 *.feather
 *.pickle
-*.pkl
-*.joblib
 
-# Images that might contain data
+# Images that might contain spectral data plots
 *.png
 *.jpg
 *.jpeg
@@ -41,8 +51,7 @@ datasets/
 *.bmp
 *.gif
 
-# Research files that might contain sensitive data
-*.txt
+# Raw data files
 *.dat
 *.bin
 *.raw
@@ -53,7 +62,7 @@ datasets/
 *.bak
 *.backup
 
-# Temporary data files
+# Temporary/cache files
 temp/
 tmp/
 temporary/
@@ -105,23 +114,36 @@ checkpoints/
 *.model
 *.h5
 
-# Results and outputs
-results/
-Results/
-RESULTS/
-output/
-outputs/
-figures/
-plots/
+# EXPERIMENT RESULTS - SAFE TO COMMIT
+# ===================================
+# These files contain analysis results, not proprietary spectral data
 
-# IDE
+# Exception: Keep experiment result files
+!*experimental_results*.json
+!*performance_summary*.txt
+!*feature_importance*.csv
+!*experiment_summary*.md
+# NOTE: wavelengths.csv excluded - contains instrument-specific configuration
+
+# Exception: Keep documentation and code
+!*.py
+!*.md
+!README*
+!requirements*.txt
+!LICENSE*
+!.gitignore
+
+# STANDARD EXCLUSIONS
+# ===================
+
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -135,38 +157,72 @@ Thumbs.db
 *.temp
 *.log
 
-# Any file that might be large (likely data)
-# Files over certain size that could be data
+# Large binary files (likely data)
 *.bin
 *.dump
 
-# Specific to this project - be extra careful
-*egg*data*
-*HSI*data*
-*spectral*
-*Spectra*
-*SPECTRAL*
+# Python runtime
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Documentation that might contain data insights
-*confidential*
-*private*
-*internal*
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# Ensure no accidental data commits
-# If it's not code, documentation, or config - exclude it
-!*.py
-!*.md
-!*.txt
-!*.yml
-!*.yaml
-!*.json
-!requirements.txt
-!README.md
-!LICENSE
-!.gitignore
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
 
-# But still exclude the data file types even if they match above
-*.csv
-*.xlsx
-*.npy
-data/ 
+# FINAL SAFETY CHECK - Re-exclude data even if exceptions above
+# ==============================================================
+# This ensures no accidental data commits regardless of filename patterns
+
+# Raw data files (override any exceptions)
+data/*.csv
+data/*.npy
+data/*.xlsx
+
+# Processed data files (override any exceptions)  
+*/X_train*.npy
+*/X_test*.npy
+*/y_train*.npy
+*/y_test*.npy
+*/*processed*.npy
+
+# Model files (override any exceptions)
+*/*_model.txt
+*/*_model.pkl
+*/lightgbm_model*
+*/*preprocessor*.pkl
+*/label_encoder*.pkl
+
+# Test and prediction outputs (contain proprietary predictions)
+*/test_predictions*.npy
+*/test_probabilities*.npy
+
+# Instrument configuration files (could reveal experimental setup)
+*/wavelengths*.csv
+*wavelengths*.csv 
