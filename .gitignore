@@ -1,0 +1,172 @@
+# HSI Research Data Protection - ABSOLUTELY NO DATA IN GIT
+# ================================================================
+
+# Excel files (original data)
+*.xlsx
+*.xls
+*.xlsm
+*.xlsb
+
+# CSV files (converted data)
+*.csv
+
+# All data directories
+data/
+Data/
+DATA/
+raw_data/
+processed_data/
+datasets/
+
+# Numpy arrays and processed data
+*.npy
+*.npz
+
+# Any other data formats
+*.mat
+*.h5
+*.hdf5
+*.parquet
+*.feather
+*.pickle
+*.pkl
+*.joblib
+
+# Images that might contain data
+*.png
+*.jpg
+*.jpeg
+*.tiff
+*.tif
+*.bmp
+*.gif
+
+# Research files that might contain sensitive data
+*.txt
+*.dat
+*.bin
+*.raw
+
+# Backup files
+*backup*
+*_backup*
+*.bak
+*.backup
+
+# Temporary data files
+temp/
+tmp/
+temporary/
+cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Environment variables
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Model outputs (could contain sensitive learned patterns)
+models/
+Models/
+MODELS/
+trained_models/
+saved_models/
+checkpoints/
+*.model
+*.h5
+
+# Results and outputs
+results/
+Results/
+RESULTS/
+output/
+outputs/
+figures/
+plots/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Any file that might be large (likely data)
+# Files over certain size that could be data
+*.bin
+*.dump
+
+# Specific to this project - be extra careful
+*egg*data*
+*HSI*data*
+*spectral*
+*Spectra*
+*SPECTRAL*
+
+# Documentation that might contain data insights
+*confidential*
+*private*
+*internal*
+
+# Ensure no accidental data commits
+# If it's not code, documentation, or config - exclude it
+!*.py
+!*.md
+!*.txt
+!*.yml
+!*.yaml
+!*.json
+!requirements.txt
+!README.md
+!LICENSE
+!.gitignore
+
+# But still exclude the data file types even if they match above
+*.csv
+*.xlsx
+*.npy
+data/ 
