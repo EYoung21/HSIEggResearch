@@ -97,40 +97,58 @@ HSIResearch/
 - **Wavelength importance mapping**: Biological interpretation of key regions
 - **Causal inference**: Identify spectral markers of future development
 
-## Immediate High-Impact Experiments
+## Experimental Design Matrix
 
-*Prioritized for maximum accuracy improvement:*
+*Systematic approach to testing unexplored combinations for maximum accuracy improvement:*
 
-1. **MSC + SG preprocessing** (expected +10-15% accuracy boost)
-2. **LightGBM with Bayesian optimization** (modern gradient boosting)
-3. **Spectral ratio features** (biologically meaningful)
-4. **Ensemble voting classifier** (RF + SVM + XGBoost)
-5. **SMOTE-ENN for mortality imbalance** (improve minority class detection)
-6. **Transfer learning from post-incubation data** (leverage Day 1-4 patterns)
+### Gender Classification Experiments
+```
+ID | Preprocessing           | Algorithm              | Features                | Priority
+---|------------------------|------------------------|-------------------------|----------
+G1 | MSC + SG 1st deriv     | LightGBM + Bayes opt   | Full spectrum          | HIGH
+G2 | SNV + SG 2nd deriv     | Ensemble (RF+SVM+XGB) | Spectral ratios        | HIGH  
+G3 | EMSC + wavelets        | 1D-CNN + LSTM          | Band depths            | MED
+G4 | Raw + augmentation     | Transformer            | GLCM texture           | MED
+G5 | MSC + derivatives      | Multi-task (G+M)       | Biology-informed       | HIGH
+G6 | SNV optimized          | Transfer from Day1-4   | PCA + ratios           | MED
+G7 | Wavelet + SNV          | Voting classifier      | Key wavelengths only   | LOW
+G8 | SG + EMSC              | Bayesian NN            | Carotenoid indices     | LOW
+```
 
-## Planned Experiments
+### Mortality Classification Experiments  
+```
+ID | Preprocessing           | Algorithm              | Features                | Priority
+---|------------------------|------------------------|-------------------------|----------
+M1 | MSC + SG filtering     | LightGBM + SMOTE-ENN   | Full + class balance   | HIGH
+M2 | SNV + 2nd derivative   | Ensemble + uncertainty | Protein/lipid ratios   | HIGH
+M3 | EMSC + augmentation    | 1D-CNN + dropout       | Band depth analysis    | MED
+M4 | Raw + SMOTE variants   | Transfer learning      | Heme protein indices   | MED
+M5 | Wavelets + MSC         | Multi-task (G+M)       | Water absorption       | HIGH
+M6 | SG + optimization      | Gradient boosting      | Morphological + spec   | MED
+M7 | SNV + mixup            | Semi-supervised        | Texture + spectral     | LOW
+M8 | Multiple derivatives   | Conformal prediction   | Uncertainty bounds     | LOW
+```
 
-### Preprocessing Methods to Test
-- Standard Normal Variate (SNV) with parameter optimization
-- Multiplicative Scatter Correction (MSC) + Savitzky-Golay combinations
-- Extended Multiple Scatter Correction (EMSC)
-- Wavelet transform preprocessing
-- First/second derivative combinations
+### Combined (Gender + Mortality) Experiments
+```
+ID | Preprocessing           | Algorithm              | Features                | Priority  
+---|------------------------|------------------------|-------------------------|----------
+C1 | MSC + SG combination   | Multi-task deep net    | Shared representations | HIGH
+C2 | SNV + derivatives      | Ensemble multi-output  | Biology-informed       | HIGH
+C3 | EMSC + wavelets        | Transfer + fine-tune   | Cross-task features    | MED
+C4 | Augmentation suite     | Attention mechanisms   | Wavelength importance  | MED
+C5 | Optimized preprocessing| Hierarchical learning  | Task-specific heads    | HIGH
+C6 | Multiple corrections   | Meta-learning          | Few-shot adaptation    | LOW
+C7 | Advanced derivatives   | Neural architecture    | Automated design       | LOW
+C8 | Domain adaptation      | Uncertainty + ensemble | Confidence intervals   | MED
+```
 
-### Algorithms to Implement
-- LightGBM with Bayesian hyperparameter optimization
-- Ensemble voting classifiers (RF + SVM + XGBoost)
-- 1D-CNN + LSTM for sequential patterns
-- Multi-task learning models
-- PLS-DA with optimized components
-- Transfer learning from post-incubation models
+**Priority Key:**
+- **HIGH**: Expected >10% accuracy improvement, established techniques
+- **MED**: Moderate improvement potential, some novelty  
+- **LOW**: Exploratory, high novelty but uncertain gains
 
-### Analysis Approaches
-- SHAP + LIME for comprehensive explainable AI
-- Recursive Feature Elimination (RFE) with biology-informed constraints
-- Principal Component Analysis (PCA) with spectral ratio features
-- SMOTE variants for advanced class imbalance handling
-- Uncertainty quantification for prediction confidence
+**Recommended execution order:** G1, M1, C1, G2, M2, C2
 
 ## Research Questions
 
