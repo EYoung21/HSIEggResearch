@@ -1,0 +1,115 @@
+{
+  "experiment": "G3_EMSC_Wavelets_CNN",
+  "preprocessing": "EMSC + Wavelet Transform (db4, 4 levels)",
+  "algorithm": "Convolutional Neural Network",
+  "hyperparameter_optimization": {
+    "method": "Grid search with cross-validation",
+    "trials": 5,
+    "best_cv_score": 0.5378361741701762
+  },
+  "best_parameters": {
+    "conv_layers": 2,
+    "filters_start": 16,
+    "dropout_rate": 0.2,
+    "dense_units": 64,
+    "learning_rate": 0.001
+  },
+  "test_results": {
+    "accuracy": 0.5395348837209303,
+    "confusion_matrix": [
+      [
+        116,
+        0
+      ],
+      [
+        99,
+        0
+      ]
+    ]
+  },
+  "training_history": {
+    "loss": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+    ],
+    "accuracy": [
+      0.5356622934341431,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029,
+      0.5371178984642029
+    ],
+    "val_loss": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+    ],
+    "val_accuracy": [
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681,
+      0.5406976938247681
+    ],
+    "epochs": 17
+  },
+  "input_shape": [
+    "2",
+    "163"
+  ],
+  "training_samples": 859,
+  "test_samples": 215
+}

@@ -1,0 +1,51 @@
+
+G3 EXPERIMENT SUMMARY: EMSC + Wavelets + CNN
+===========================================
+
+METHODOLOGY:
+- Preprocessing: EMSC + Wavelet Transform (Daubechies 4, 4 levels)
+- Algorithm: Convolutional Neural Network
+- Input: 2D wavelet coefficient grids
+- Optimization: Grid search with cross-validation
+
+DATASET:
+- Training samples: 859
+- Test samples: 215
+- Input shape: (np.int64(2), np.int64(163)) + 1 channel
+- Classes: Female, Male
+
+CNN ARCHITECTURE:
+- Convolutional layers: 2
+- Starting filters: 16
+- Dropout rate: 0.2
+- Dense units: 64
+- Learning rate: 0.001
+
+TRAINING RESULTS:
+- Best CV Score: 0.5378
+- Final Validation Accuracy: 0.5407
+- Training Epochs: 17
+
+TEST SET RESULTS:
+- CNN Test Accuracy: 0.5395
+
+CONFUSION MATRIX:
+[[116   0]
+ [ 99   0]]
+
+OPTIMIZATION RESULTS:
+- Search method: Grid search with 3-fold CV
+- Trials completed: 5
+- Best parameters: {'conv_layers': 2, 'filters_start': 16, 'dropout_rate': 0.2, 'dense_units': 64, 'learning_rate': 0.001}
+
+FILES GENERATED:
+- G3_cnn_model.h5 (trained CNN model)
+- G3_experimental_results.json (complete results)
+- G3_model_metadata.json (model metadata)
+- test_predictions.csv (test set predictions)
+
+NOTES:
+- EMSC provides superior scatter correction compared to MSC/SNV
+- Wavelets capture multi-resolution time-frequency information
+- CNN learns spatial patterns in wavelet coefficient space
+- Deep learning approach for complex non-linear relationships
