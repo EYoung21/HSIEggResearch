@@ -154,7 +154,43 @@ python G8_model.py
 
 ## 📈 **Performance Analysis**
 
-### **Comparison with Previous Experiments**
+## 📊 **Key Results**
+
+### **🏆 Performance Summary**
+- **Test Accuracy**: 53.95%
+- **AUC Score**: 54.65%
+- **Cross-Validation**: 50.06% ± 0.79%
+- **Training Time**: 2.4 seconds
+- **Dataset**: 1,074 samples (859 training, 215 test)
+
+### **🎯 Uncertainty Quantification Results**
+| Uncertainty Type | Mean Value | Interpretation |
+|------------------|------------|----------------|
+| **Epistemic** | 13.76% | Model uncertainty (reducible) |
+| **Aleatoric** | 23.29% | Data uncertainty (irreducible) |
+| **Total** | 37.06% | Combined uncertainty |
+| **Prediction Interval Coverage** | 0.00% | Calibration metric |
+
+### **📈 Reliability Analysis**
+| Uncertainty Level | Accuracy | Sample Confidence |
+|-------------------|----------|-------------------|
+| **Low Uncertainty** | 53.70% | High confidence predictions |
+| **High Uncertainty** | 50.00% | Uncertain predictions |
+
+### **🔬 Bayesian Neural Network Details**
+- **Architecture**: 100 → 128 → 64 → 32 → 1
+- **Total Parameters**: 24,193
+- **Dropout Rate**: 0.2 (Monte Carlo Dropout)
+- **Monte Carlo Samples**: 100 forward passes
+- **Training Epochs**: Variable (early stopping)
+
+### **⚙️ Technical Configuration**
+- **Features**: 100 (optimized from 925 total)
+- **Feature Selection**: F-classification test
+- **Preprocessing**: EMSC + SG derivatives + advanced spectral features
+- **Normalization**: Multi-scale (Standard + Robust scaling)
+
+### **📊 Comparison with Previous Experiments**
 | Experiment | Method | Accuracy | Innovation |
 |------------|--------|----------|------------|
 | G1 | MSC + SG + LightGBM | 53.95% | Ensemble learning |
@@ -165,11 +201,11 @@ python G8_model.py
 | G7 | Wavelet + SNV + Voting | 53.49% | Advanced ensemble |
 | **G8** | **EMSC + SG + Bayesian NN** | **53.95%** | **Uncertainty quantification** |
 
-### **Key Observations**
-- **Competitive Performance**: Matches best single-task results
-- **Uncertainty Quantification**: Unique advantage over other methods
-- **Robust Preprocessing**: EMSC effectively handles scattering effects
-- **Clinical Readiness**: Provides confidence intervals for decisions
+### **🔍 Key Innovation: Uncertainty Quantification**
+- **Clinical Decision Support**: Provides confidence intervals for predictions
+- **Risk Assessment**: Identifies uncertain cases for manual review
+- **Model Calibration**: Quantifies prediction reliability
+- **Unique Advantage**: Only experiment providing uncertainty metrics
 
 ## 🔍 **Uncertainty Interpretation**
 

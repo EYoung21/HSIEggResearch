@@ -119,17 +119,40 @@ G6_SNV_Optimized_Transfer/
 - **Transfer Classification**: Fine-tuned deep neural network
 - **Ensemble Integration**: Multiple models with encoded features
 
-### **Expected Results**
-- **Accuracy**: 54-56% (transfer learning improvement)
-- **Models**: Deep transfer + RF + SVM + LR + ensemble
-- **Features**: Optimized wavelength selection (50-300 features)
-- **Architecture**: Multi-phase transfer learning with domain adaptation
+## 📊 **Key Results**
 
-### **Key Advantages**
+### **🏆 Performance Summary**
+- **Best Model**: Ensemble (Voting)
+- **Best Accuracy**: 54.88%
+- **Training Time**: Variable (multi-phase approach)
+- **Dataset**: 1,074 samples (859 training, 215 test)
+
+### **🎯 Model Comparison**
+| Model | Accuracy | Notes |
+|-------|----------|-------|
+| **Deep Transfer** | 51.16% | Pre-trained autoencoder + classifier |
+| **Random Forest** | 51.16% | Classical ML on encoded features |
+| **SVM** | **53.49%** | Best individual classifier |
+| **Logistic Regression** | 48.37% | Linear baseline |
+| **Ensemble (Voting)** | **54.88%** | **Best overall performance** |
+
+### **🔬 Transfer Learning Pipeline Results**
+1. **Autoencoder Pre-training**: Unsupervised feature learning completed
+2. **Feature Extraction**: 32-dimensional encoded representations
+3. **Transfer Classification**: Fine-tuned deep neural network
+4. **Ensemble Integration**: Multiple models with encoded features
+
+### **⚙️ Architecture Details**
+- **Encoder**: 150→128→64→32 (compressed representation)
+- **Features**: 150 optimized transfer learning features
+- **Pre-training**: 80 epochs autoencoder training
+- **Fine-tuning**: Lower learning rate (0.0001) for stability
+
+### **📊 Technical Innovation**
 - **Domain Adaptation**: Specialized for hyperspectral data patterns
-- **Unsupervised Pre-training**: Leverages unlabeled spectral information
-- **Multi-model Approach**: Robust ensemble predictions
-- **Optimized Features**: Intelligent wavelength selection
+- **Multi-phase Training**: Autoencoder → Transfer → Fine-tuning → Ensemble
+- **Feature Optimization**: Automated selection (50-300 feature range)
+- **Ensemble Strategy**: Voting combination of diverse models
 
 ## 🔧 **Technical Details**
 

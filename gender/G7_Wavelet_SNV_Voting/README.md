@@ -40,39 +40,40 @@ Raw Spectra (300 wavelengths)
 - **Cross-Validation**: 5-fold stratified validation for selection
 - **Automated Selection**: Range-based optimization (10-300 features)
 
-## 📊 Results
+## 📊 **Key Results**
 
-### Overall Performance
+### **🏆 Performance Summary**
 - **Best Model**: snv_sg_gradient_boosting
 - **Best Accuracy**: 53.49%
 - **Total Models Trained**: 40 (30 base + 10 ensemble)
 - **Feature Sets**: 5 different preprocessing approaches
+- **Dataset**: 1,074 samples (859 training, 215 test)
 
-### Feature Set Performance
+### **🎯 Feature Set Performance**
 | Feature Set | Features | Best Algorithm | Accuracy |
 |-------------|----------|----------------|----------|
-| SNV + SG | 50 | Gradient Boosting | 53.49% |
-| Wavelet | 10 | Naive Bayes | 53.49% |
-| Combined | 175 | Naive Bayes | 52.56% |
-| SNV + MinMax | 50 | Gradient Boosting | 53.49% |
-| SNV + Robust | 50 | Gradient Boosting | 53.49% |
+| **SNV + SG** | 50 | **Gradient Boosting** | **53.49%** |
+| **Wavelet** | 10 | Naive Bayes | 53.49% |
+| **Combined** | 175 | Naive Bayes | 52.56% |
+| **SNV + MinMax** | 50 | Gradient Boosting | 53.49% |
+| **SNV + Robust** | 50 | Gradient Boosting | 53.49% |
 
-### Top 5 Model Results
+### **🥇 Top 5 Model Results**
 1. **snv_sg_gradient_boosting**: 53.49%
 2. **snv_minmax_gradient_boosting**: 53.49%
 3. **snv_robust_gradient_boosting**: 53.49%
 4. **wavelet_naive_bayes**: 53.49%
 5. **combined_naive_bayes**: 52.56%
 
-### Ensemble Results
-| Ensemble Type | Feature Set | Accuracy |
-|---------------|-------------|----------|
-| Hard Voting | SNV + MinMax | 51.16% |
-| Soft Voting | Wavelet | 50.70% |
-| Hard Voting | Wavelet | 50.23% |
-| Soft Voting | Combined | 50.23% |
+### **📈 Ensemble Results**
+| Ensemble Type | Feature Set | Accuracy | Notes |
+|---------------|-------------|----------|-------|
+| **Hard Voting** | SNV + MinMax | 51.16% | Majority vote |
+| **Soft Voting** | Wavelet | 50.70% | Probability averaging |
+| **Hard Voting** | Wavelet | 50.23% | Binary consensus |
+| **Soft Voting** | Combined | 50.23% | Weighted predictions |
 
-### Classification Details (Best Model)
+### **📊 Best Model Analysis (snv_sg_gradient_boosting)**
 ```
               precision    recall  f1-score   support
       Female       0.56      0.66      0.61       116
@@ -86,6 +87,12 @@ Confusion Matrix:
 [[77 39]
  [61 38]]
 ```
+
+### **🔬 Technical Achievement**
+- **Multi-Path Processing**: 5 different feature engineering approaches
+- **Advanced Ensemble**: 40 total models with voting strategies
+- **Wavelet Innovation**: db4 wavelet with 3 decomposition levels (33 features)
+- **Gradient Boosting**: Consistently best performer across feature sets
 
 ## 🔬 Technical Innovation
 

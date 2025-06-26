@@ -97,23 +97,47 @@ python G2_preprocessing.py
 python G2_model.py
 ```
 
-## 📊 Expected Outputs
+## 📊 **Key Results**
 
-### Performance Metrics
-- **Cross-Validation Scores**: Individual models + ensemble
-- **Test Accuracy**: Final model performance
-- **Confusion Matrix**: Detailed classification breakdown
-- **Individual Model Comparison**: RF vs SVM vs XGBoost performance
+### **🏆 Performance Summary**
+- **Best Model**: Ensemble (Soft Voting)
+- **Test Accuracy**: 50.70%
+- **Training Time**: 30+ minutes (Bayesian optimization)
+- **Dataset**: 1,074 samples (859 training, 215 test)
 
-### Feature Analysis
-- **Spectral Ratio Importance**: Most discriminative ratios
-- **Biological Interpretation**: Regional importance (protein, lipid, NIR regions)
-- **Feature Rankings**: Combined importance from tree-based models
+### **🎯 Individual Model Performance**
+| Model | Cross-Validation | Test Accuracy |
+|-------|------------------|---------------|
+| **Random Forest** | 53.90% ± 3.37% | 53.90% |
+| **SVM** | 53.78% ± 0.26% | 53.78% |
+| **XGBoost** | 54.60% ± 3.18% | 54.60% |
+| **Ensemble (Soft Voting)** | 55.06% ± 3.22% | **50.70%** |
 
-### Model Artifacts
-- **Trained Ensemble**: Complete voting classifier
-- **Individual Models**: RF, SVM, XGBoost with optimized parameters
-- **Preprocessor**: Fitted SNV + SG pipeline for new data
+### **📈 Confusion Matrix (Ensemble)**
+```
+              Predicted
+Actual     Female  Male
+Female        79    37
+Male          69    30
+```
+
+### **🔬 Feature Analysis: Top Spectral Ratios**
+1. **red_to_blue_ratio** (importance: 0.047619)
+2. **nir1_to_red_ratio** (importance: 0.047619)  
+3. **nir2_to_nir1_ratio** (importance: 0.047619)
+4. **green_to_blue_ratio** (importance: 0.047619)
+5. **nir2_to_red_ratio** (importance: 0.047619)
+
+### **⚙️ Best Hyperparameters**
+- **Random Forest**: n_estimators=201, max_depth=12, min_samples_split=19
+- **SVM**: C=0.758, gamma=2.11e-05, kernel='rbf'
+- **XGBoost**: n_estimators=290, max_depth=3, learning_rate=0.069
+
+### **📊 Technical Details**
+- **Features**: 21 spectral ratio features (regional analysis)
+- **Preprocessing**: SNV + Savitzky-Golay 2nd derivative + spectral ratios
+- **Optimization**: Bayesian optimization (30 calls)
+- **Ensemble**: Soft voting for probability averaging
 
 ## 🔬 Spectral Ratio Features
 

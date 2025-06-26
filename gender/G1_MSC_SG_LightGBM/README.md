@@ -75,18 +75,45 @@ python G1_preprocessing.py
 python G1_model.py
 ```
 
-## Expected Results
+## 📊 **Key Results**
 
-### Data Summary
-- **Training samples**: ~860 (80% of clear gender labels)
-- **Test samples**: ~215 (20% of clear gender labels)
-- **Features**: 300 wavelengths after MSC + SG 1st derivative
-- **Classes**: Male (0), Female (1)
+### **🎯 Performance Summary**
+- **Test Accuracy**: 53.95% ⚠️ 
+- **Cross-Validation**: 55.88% ± std
+- **AUC Score**: Not applicable (binary classification issue)
+- **Training Time**: 0.5 minutes
+- **Dataset**: 1,074 samples (859 training, 215 test)
 
-### Performance Expectations
-- **Target accuracy**: >85% (high priority experiment)
-- **Features**: Biologically meaningful wavelength importance
-- **Optimization**: Improved performance over default hyperparameters
+### **🚨 Critical Issue Identified**
+**Problem**: Model predicts ALL samples as Female (class imbalance issue)
+
+| Metric | Female | Male |
+|--------|---------|------|
+| **Precision** | 0.54 | 0.00 |
+| **Recall** | 1.00 | 0.00 |
+| **F1-Score** | 0.70 | 0.00 |
+| **Support** | 116 | 99 |
+
+**Analysis**: The 53.95% accuracy is misleading - it's just the proportion of females in the test set. The model learned to always predict the majority class due to class imbalance.
+
+### **🔬 Technical Results**
+- **Algorithm**: LightGBM with Bayesian optimization (30 calls)
+- **Best Hyperparameters**: num_leaves=78, learning_rate=0.030, feature_fraction=0.828
+- **Features**: 300 wavelengths (374.14-1015.32 nm)
+- **Preprocessing**: MSC + Savitzky-Golay 1st derivative (window=15, poly=3)
+
+### **📈 Top 5 Most Important Wavelengths**
+1. **793.2 nm** (importance: 10.91) - Near-infrared, water absorption
+2. **631.67 nm** (importance: 8.89) - Red, protein absorption  
+3. **992.76 nm** (importance: 5.98) - Near-infrared, organic compounds
+4. **578.79 nm** (importance: 5.90) - Green-yellow, pigments
+5. **443.58 nm** (importance: 4.40) - Blue, carotenoids
+
+### **⚙️ Configuration Details**
+- **Classes**: Female (578 samples, 53.8%), Male (496 samples, 46.2%)
+- **Split**: Stratified 80/20 train/test
+- **Optimization**: 5-fold cross-validation
+- **Model Size**: 15.7 KB (lightweight deployment)
 
 ## Technical Details
 
