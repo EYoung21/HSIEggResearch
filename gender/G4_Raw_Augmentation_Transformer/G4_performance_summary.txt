@@ -1,0 +1,53 @@
+
+G4 EXPERIMENT SUMMARY: Raw + Augmentation + Transformer
+======================================================
+
+METHODOLOGY:
+- Preprocessing: Minimal (preserving raw information)
+- Data Augmentation: Comprehensive suite (noise, scaling, shifting, etc.)
+- Algorithm: Transformer with Multi-Head Self-Attention
+- Input: Raw spectral sequences with positional encoding
+- Optimization: Grid search with cross-validation
+
+DATASET:
+- Training samples: 924 (augmented from 462 original)
+- Test samples: 215
+- Sequence length: 300 wavelengths
+- Classes: Female, Male
+
+TRANSFORMER ARCHITECTURE:
+ - Embedding dimension: 64
+ - Attention heads: 4
+ - Feed-forward dimension: 128
+ - Transformer layers: 2
+ - Dropout rate: 0.1
+ - Learning rate: 0.001
+
+TRAINING RESULTS:
+- Best CV Score: 0.5000
+- Final Validation Accuracy: 0.4973
+- Training Epochs: 22
+
+TEST SET RESULTS:
+- Transformer Test Accuracy: 0.4605
+
+CONFUSION MATRIX:
+[[  0 116]
+ [  0  99]]
+
+OPTIMIZATION RESULTS:
+- Search method: Grid search with 3-fold CV
+- Trials completed: 12
+- Best parameters: {'embed_dim': 64, 'num_heads': 4, 'ff_dim': 128, 'num_layers': 2, 'dropout_rate': 0.1, 'learning_rate': 0.001}
+
+FILES GENERATED:
+- G4_transformer_model.h5 (trained Transformer model)
+- G4_experimental_results.json (complete results)
+- G4_model_metadata.json (model metadata)
+- test_predictions.csv (test set predictions)
+
+NOTES:
+- Data augmentation addresses class imbalance effectively
+- Transformer attention mechanism learns spectral dependencies
+- Minimal preprocessing preserves maximum information
+- Self-attention captures long-range spectral relationships

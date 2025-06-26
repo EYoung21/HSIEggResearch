@@ -83,20 +83,26 @@ class SpectralTransformerClassifier:
             Compiled Transformer model
         """
         
-        print(f"Creating Transformer with {num_layers} layers, {num_heads} heads, {embed_dim}D embedding")
+        print(f"         [ARCH]  Creating Transformer: {num_layers} layers, {num_heads} heads, {embed_dim}D embedding")
         
         # Input layer
+        print(f"         [INPUT] Creating input layer: ({self.sequence_length}, 1)")
         inputs = layers.Input(shape=(self.sequence_length, 1))
         
         # Embedding layer (project 1D spectral values to higher dimension)
+        print(f"         [BUILD] Creating embedding layer: 1 → {embed_dim}")
         x = layers.Dense(embed_dim)(inputs)
         
         # Add positional encoding
+        print(f"         [POS] Adding positional encoding...")
         pos_encoding = self.positional_encoding(self.sequence_length, embed_dim)
         x = x + pos_encoding
         
         # Transformer layers
+        print(f"         [PROC] Building {num_layers} Transformer layers...")
         for i in range(num_layers):
+            print(f"            [BUILD] Layer {i+1}/{num_layers} - Multi-head attention...")
+            
             # Multi-head self-attention
             attention_output = layers.MultiHeadAttention(
                 num_heads=num_heads,
@@ -109,6 +115,7 @@ class SpectralTransformerClassifier:
             x = layers.Add()([x, attention_output])
             x = layers.LayerNormalization(name=f'norm_1_{i+1}')(x)
             
+            print(f"            [BUILD] Layer {i+1}/{num_layers} - Feed-forward network...")
             # Feed-forward network
             ff_output = tf.keras.Sequential([
                 layers.Dense(ff_dim, activation='relu'),
@@ -120,6 +127,7 @@ class SpectralTransformerClassifier:
             x = layers.Add()([x, ff_output])
             x = layers.LayerNormalization(name=f'norm_2_{i+1}')(x)
         
+        print(f"         [POOL] Adding global pooling layers...")
         # Global pooling (aggregate sequence information)
         # Try both average and max pooling
         avg_pool = layers.GlobalAveragePooling1D()(x)
@@ -128,12 +136,14 @@ class SpectralTransformerClassifier:
         # Concatenate different pooling strategies
         pooled = layers.Concatenate()([avg_pool, max_pool])
         
+        print(f"         [RESULT] Adding classification head...")
         # Classification head
         x = layers.Dense(ff_dim // 2, activation='relu', name='classifier_dense')(pooled)
         x = layers.Dropout(dropout_rate, name='classifier_dropout')(x)
         outputs = layers.Dense(1, activation='sigmoid', name='output')(x)
         
         # Create model
+        print(f"         [BUILD] Compiling Transformer model...")
         model = tf.keras.Model(inputs, outputs, name='SpectralTransformer')
         
         # Compile model
@@ -143,6 +153,8 @@ class SpectralTransformerClassifier:
             loss='binary_crossentropy',
             metrics=['accuracy']
         )
+        
+        print(f"         [OK] Transformer model created successfully!")
         
         return model
     
@@ -159,7 +171,10 @@ class SpectralTransformerClassifier:
         Returns:
             Best parameters and CV score
         """
-        print(f"Starting Transformer hyperparameter search with {max_trials} trials...")
+        print(f"[SEARCH] Starting Transformer hyperparameter search with {max_trials} trials...")
+        print(f"   [DATA] Training data shape: {X_train.shape}")
+        print(f"   [DATA] Training labels shape: {y_train.shape}")
+        print(f"   [DATA] Cross-validation folds: {cv_folds}")
         
         # Define parameter grid (optimized for spectral data)
         param_combinations = [
@@ -181,6 +196,8 @@ class SpectralTransformerClassifier:
             (96, 4, 192, 4, 0.1, 0.0005),
         ]
         
+        print(f"   📋 Total parameter combinations: {len(param_combinations)}")
+        
         best_score = 0
         best_params = None
         results = []
@@ -188,21 +205,30 @@ class SpectralTransformerClassifier:
         for trial, params in enumerate(param_combinations[:max_trials]):
             embed_dim, num_heads, ff_dim, num_layers, dropout_rate, learning_rate = params
             
-            print(f"\nTrial {trial+1}/{max_trials}: embed={embed_dim}, heads={num_heads}, "
+            print(f"\n[PROC] Trial {trial+1}/{max_trials}: embed={embed_dim}, heads={num_heads}, "
                   f"ff={ff_dim}, layers={num_layers}, dropout={dropout_rate}, lr={learning_rate}")
             
             try:
+                print(f"   [DATA] Setting up {cv_folds}-fold cross-validation...")
+                
                 # Cross-validation
                 cv_scores = []
                 kfold = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=self.random_state)
                 
+                print(f"   [PROC] Starting cross-validation folds...")
+                
                 for fold, (train_idx, val_idx) in enumerate(kfold.split(X_train, y_train)):
+                    print(f"      [FOLD] Fold {fold+1}/{cv_folds} - Preparing data...")
+                    
                     X_train_fold = X_train[train_idx]
                     X_val_fold = X_train[val_idx]
                     y_train_fold = y_train[train_idx]
                     y_val_fold = y_train[val_idx]
                     
+                    print(f"         [DATA] Fold {fold+1} - Train: {X_train_fold.shape}, Val: {X_val_fold.shape}")
+                    
                     # Create and train model
+                    print(f"      [ARCH]  Fold {fold+1} - Creating Transformer architecture...")
                     model = self.create_transformer_architecture(
                         embed_dim=embed_dim,
                         num_heads=num_heads,
@@ -211,6 +237,8 @@ class SpectralTransformerClassifier:
                         dropout_rate=dropout_rate,
                         learning_rate=learning_rate
                     )
+                    
+                    print(f"      [MODEL] Fold {fold+1} - Model created, starting training...")
                     
                     # Early stopping
                     early_stop = EarlyStopping(
@@ -221,7 +249,8 @@ class SpectralTransformerClassifier:
                     )
                     
                     # Train model
-                    model.fit(
+                    print(f"      [START] Fold {fold+1} - Training model (max 40 epochs)...")
+                    history = model.fit(
                         X_train_fold, y_train_fold,
                         validation_data=(X_val_fold, y_val_fold),
                         epochs=40,  # Reduced for faster search
@@ -230,19 +259,27 @@ class SpectralTransformerClassifier:
                         verbose=0
                     )
                     
+                    print(f"      [OK] Fold {fold+1} - Training completed after {len(history.history['loss'])} epochs")
+                    
                     # Evaluate
+                    print(f"      [DATA] Fold {fold+1} - Evaluating model...")
                     val_score = model.evaluate(X_val_fold, y_val_fold, verbose=0)[1]
                     cv_scores.append(val_score)
                     
+                    print(f"      [RESULT] Fold {fold+1} - Validation accuracy: {val_score:.4f}")
+                    
                     # Clean up
+                    print(f"      [CLEANUP] Fold {fold+1} - Cleaning up model...")
                     del model
                     tf.keras.backend.clear_session()
+                
+                print(f"   [OK] All {cv_folds} folds completed for trial {trial+1}")
                 
                 # Calculate mean CV score
                 mean_score = np.mean(cv_scores)
                 std_score = np.std(cv_scores)
                 
-                print(f"  CV Score: {mean_score:.4f} ± {std_score:.4f}")
+                print(f"   [DATA] Trial {trial+1} - CV Score: {mean_score:.4f} ± {std_score:.4f}")
                 
                 results.append({
                     'params': params,
@@ -261,16 +298,21 @@ class SpectralTransformerClassifier:
                         'dropout_rate': dropout_rate,
                         'learning_rate': learning_rate
                     }
-                    print(f"  ✓ New best score!")
+                    print(f"   [BEST] Trial {trial+1} - NEW BEST SCORE: {best_score:.4f}!")
+                else:
+                    print(f"   📈 Trial {trial+1} - Score: {mean_score:.4f} (Best: {best_score:.4f})")
                 
             except Exception as e:
-                print(f"  Error in trial {trial+1}: {e}")
+                print(f"   [ERROR] Trial {trial+1} - ERROR: {e}")
+                import traceback
+                print(f"   📋 Full traceback:")
+                traceback.print_exc()
                 continue
         
         self.best_params = best_params
-        print(f"\n✓ Transformer hyperparameter search completed!")
-        print(f"✓ Best CV score: {best_score:.4f}")
-        print(f"✓ Best parameters: {best_params}")
+        print(f"\n[SUCCESS] Transformer hyperparameter search completed!")
+        print(f"   [BEST] Best CV score: {best_score:.4f}")
+        print(f"   [CONFIG]  Best parameters: {best_params}")
         
         return best_params, best_score, results
     
@@ -456,81 +498,142 @@ def main():
     print("="*60)
     
     # Load processed data
-    print("Loading processed spectral data...")
-    X_train = np.load('X_train_processed.npy')
-    X_test = np.load('X_test_processed.npy')
-    y_train = np.load('y_train_augmented.npy')
-    y_test = np.load('y_test.npy')
+    print("[FOLD] Loading processed spectral data...")
+    try:
+        X_train = np.load('X_train_processed.npy')
+        print(f"   [OK] Loaded X_train: {X_train.shape}")
+        
+        X_test = np.load('X_test_processed.npy')
+        print(f"   [OK] Loaded X_test: {X_test.shape}")
+        
+        y_train = np.load('y_train_augmented.npy')
+        print(f"   [OK] Loaded y_train: {y_train.shape}")
+        
+        y_test = np.load('y_test.npy')
+        print(f"   [OK] Loaded y_test: {y_test.shape}")
+        
+        # Load sequence length and label encoder
+        sequence_length = int(np.load('transformer_sequence_length.npy')[0])
+        print(f"   [OK] Loaded sequence_length: {sequence_length}")
+        
+        label_encoder = joblib.load('label_encoder.pkl')
+        print(f"   [OK] Loaded label_encoder: {label_encoder.classes_}")
+        
+    except Exception as e:
+        print(f"   [ERROR] Error loading data: {e}")
+        import traceback
+        traceback.print_exc()
+        return
     
-    # Load sequence length and label encoder
-    sequence_length = int(np.load('transformer_sequence_length.npy')[0])
-    label_encoder = joblib.load('label_encoder.pkl')
-    
-    print(f"✓ Training set: {X_train.shape}")
-    print(f"✓ Test set: {X_test.shape}")
-    print(f"✓ Sequence length: {sequence_length}")
-    print(f"✓ Classes: {label_encoder.classes_}")
+    print(f"[DATA] Data Summary:")
+    print(f"   * Training set: {X_train.shape}")
+    print(f"   * Test set: {X_test.shape}")
+    print(f"   * Sequence length: {sequence_length}")
+    print(f"   * Classes: {label_encoder.classes_}")
+    print(f"   * Training class distribution: {np.bincount(y_train)}")
+    print(f"   * Test class distribution: {np.bincount(y_test)}")
     
     # Initialize Transformer classifier
+    print(f"\n[START] Initializing Transformer classifier...")
     classifier = SpectralTransformerClassifier(sequence_length=sequence_length, random_state=42)
+    print(f"   [OK] Classifier initialized successfully!")
     
     # Hyperparameter optimization
     print("\n" + "="*50)
-    print("TRANSFORMER HYPERPARAMETER OPTIMIZATION")
+    print("[SEARCH] TRANSFORMER HYPERPARAMETER OPTIMIZATION")
     print("="*50)
     
-    best_params, best_score, search_results = classifier.hyperparameter_search(
-        X_train, y_train, 
-        cv_folds=3,  # Reduced for faster execution
-        max_trials=12  # Reduced for faster execution
-    )
+    try:
+        print(f"[PROC] Starting hyperparameter search...")
+        best_params, best_score, search_results = classifier.hyperparameter_search(
+            X_train, y_train, 
+            cv_folds=3,  # Reduced for faster execution
+            max_trials=12  # Reduced for faster execution
+        )
+        print(f"[OK] Hyperparameter search completed successfully!")
+        
+    except Exception as e:
+        print(f"[ERROR] Error during hyperparameter search: {e}")
+        import traceback
+        traceback.print_exc()
+        return
     
     # Train optimized model
     print("\n" + "="*50)
-    print("TRAINING OPTIMIZED TRANSFORMER")
+    print("[START] TRAINING OPTIMIZED TRANSFORMER")
     print("="*50)
     
-    model, history = classifier.train_optimized_model(X_train, y_train, epochs=100)
+    try:
+        print(f"[PROC] Starting optimized model training...")
+        model, history = classifier.train_optimized_model(X_train, y_train, epochs=100)
+        print(f"[OK] Model training completed successfully!")
+        
+    except Exception as e:
+        print(f"[ERROR] Error during model training: {e}")
+        import traceback
+        traceback.print_exc()
+        return
     
     # Test set evaluation
-    test_results = classifier.evaluate_on_test(X_test, y_test, label_encoder)
+    print("\n" + "="*50)
+    print("[DATA] TEST SET EVALUATION")
+    print("="*50)
+    
+    try:
+        print(f"[PROC] Starting test set evaluation...")
+        test_results = classifier.evaluate_on_test(X_test, y_test, label_encoder)
+        print(f"[OK] Test evaluation completed successfully!")
+        
+    except Exception as e:
+        print(f"[ERROR] Error during test evaluation: {e}")
+        import traceback
+        traceback.print_exc()
+        return
     
     # Save model and results
     print("\n" + "="*50)
-    print("SAVING RESULTS")
+    print("[SAVE] SAVING RESULTS")
     print("="*50)
     
-    classifier.save_model('G4_transformer_model.h5')
-    
-    # Save comprehensive results
-    results = {
-        'experiment': 'G4_Raw_Augmentation_Transformer',
-        'preprocessing': 'Minimal + Comprehensive Data Augmentation',
-        'algorithm': 'Transformer (Multi-Head Self-Attention)',
-        'hyperparameter_optimization': {
-            'method': 'Grid search with cross-validation',
-            'trials': len(search_results),
-            'best_cv_score': float(best_score)
-        },
-        'best_parameters': best_params,
-        'test_results': {
-            'accuracy': float(test_results['test_accuracy']),
-            'confusion_matrix': test_results['confusion_matrix'].tolist(),
-        },
-        'training_history': classifier.get_training_history(),
-        'sequence_length': sequence_length,
-        'training_samples': int(X_train.shape[0]),
-        'test_samples': int(X_test.shape[0])
-    }
-    
-    with open('G4_experimental_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
-    
-    # Create summary report
-    training_hist = classifier.get_training_history()
-    final_val_acc = training_hist['val_accuracy'][-1] if training_hist else 0
-    
-    summary = f"""
+    try:
+        print(f"[PROC] Saving model...")
+        classifier.save_model('G4_transformer_model.h5')
+        print(f"[OK] Model saved successfully!")
+        
+        print(f"[PROC] Saving experimental results...")
+        
+        # Save comprehensive results
+        results = {
+            'experiment': 'G4_Raw_Augmentation_Transformer',
+            'preprocessing': 'Minimal + Comprehensive Data Augmentation',
+            'algorithm': 'Transformer (Multi-Head Self-Attention)',
+            'hyperparameter_optimization': {
+                'method': 'Grid search with cross-validation',
+                'trials': len(search_results),
+                'best_cv_score': float(best_score)
+            },
+            'best_parameters': best_params,
+            'test_results': {
+                'accuracy': float(test_results['test_accuracy']),
+                'confusion_matrix': test_results['confusion_matrix'].tolist(),
+            },
+            'training_history': classifier.get_training_history(),
+            'sequence_length': sequence_length,
+            'training_samples': int(X_train.shape[0]),
+            'test_samples': int(X_test.shape[0])
+        }
+        
+        with open('G4_experimental_results.json', 'w') as f:
+            json.dump(results, f, indent=2, default=str)
+        
+        print(f"[OK] Results saved to G4_experimental_results.json")
+        
+        # Create summary report
+        print(f"[PROC] Creating performance summary...")
+        training_hist = classifier.get_training_history()
+        final_val_acc = training_hist['val_accuracy'][-1] if training_hist else 0
+        
+        summary = f"""
 G4 EXPERIMENT SUMMARY: Raw + Augmentation + Transformer
 ======================================================
 
@@ -583,16 +686,21 @@ NOTES:
 - Minimal preprocessing preserves maximum information
 - Self-attention captures long-range spectral relationships
 """
-    
-    with open('G4_performance_summary.txt', 'w') as f:
-        f.write(summary)
-    
-    print("✓ Saved G4_experimental_results.json")
-    print("✓ Saved G4_performance_summary.txt")
-    print("✓ Saved test_predictions.csv")
-    
-    print(f"\n🎯 G4 TRANSFORMER TEST ACCURACY: {test_results['test_accuracy']:.4f}")
-    print("✅ G4 experiment completed successfully!")
+        
+        with open('G4_performance_summary.txt', 'w') as f:
+            f.write(summary)
+        
+        print("[OK] Saved G4_performance_summary.txt")
+        print("[OK] Saved test_predictions.csv")
+        
+        print(f"\n[RESULT] G4 TRANSFORMER TEST ACCURACY: {test_results['test_accuracy']:.4f}")
+        print("[SUCCESS] G4 experiment completed successfully!")
+        
+    except Exception as e:
+        print(f"[ERROR] Error during results saving: {e}")
+        import traceback
+        traceback.print_exc()
+        return
 
 if __name__ == "__main__":
     main() 

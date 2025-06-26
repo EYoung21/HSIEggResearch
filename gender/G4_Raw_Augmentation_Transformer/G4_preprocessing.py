@@ -353,7 +353,7 @@ class RawSpectralPreprocessor:
         # For spectral data: (samples, wavelengths, 1)
         transformer_input = spectra.reshape(spectra.shape[0], spectra.shape[1], 1)
         
-        print(f"✓ Transformer input shape: {transformer_input.shape}")
+        print(f"[OK] Transformer input shape: {transformer_input.shape}")
         print(f"  - Batch dimension: {transformer_input.shape[0]} samples")
         print(f"  - Sequence length: {transformer_input.shape[1]} wavelengths") 
         print(f"  - Feature dimension: {transformer_input.shape[2]} (single feature)")
@@ -413,8 +413,8 @@ def load_and_merge_data(day='D0'):
     # Merge on HSI sample ID
     merged_df = pd.merge(ref_df, spectral_df, on='HSI sample ID', how='inner')
     
-    print(f"✓ Merged dataset shape: {merged_df.shape}")
-    print(f"✓ Samples with both reference and spectral data: {len(merged_df)}")
+    print(f"[OK] Merged dataset shape: {merged_df.shape}")
+    print(f"[OK] Samples with both reference and spectral data: {len(merged_df)}")
     
     return merged_df
 
@@ -515,9 +515,9 @@ def main():
     # Transform test data (no augmentation)
     X_test_processed = preprocessor.transform(X_test_raw)
     
-    print(f"✓ Processed training set shape: {X_train_processed.shape}")
-    print(f"✓ Processed test set shape: {X_test_processed.shape}")
-    print(f"✓ Augmented training labels shape: {y_train_augmented.shape}")
+    print(f"[OK] Processed training set shape: {X_train_processed.shape}")
+    print(f"[OK] Processed test set shape: {X_test_processed.shape}")
+    print(f"[OK] Augmented training labels shape: {y_train_augmented.shape}")
     
     # Save processed data
     print("\nSaving processed data...")
@@ -535,7 +535,7 @@ def main():
     sequence_length = X_train_processed.shape[1]
     np.save('transformer_sequence_length.npy', np.array([sequence_length]))
     
-    print("✓ Saved processed data and preprocessor")
+    print("[OK] Saved processed data and preprocessor")
     
     # Summary statistics
     print("\n" + "="*50)
