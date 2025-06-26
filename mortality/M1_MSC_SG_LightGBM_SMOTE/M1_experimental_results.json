@@ -1,0 +1,110 @@
+{
+  "experiment_id": "M1_MSC_SG_LightGBM_SMOTE",
+  "methodology": {
+    "preprocessing": "MSC + Savitzky-Golay filtering",
+    "feature_selection": "mutual_info",
+    "class_balancing": "SMOTE-ENN",
+    "algorithm": "LightGBM + Ensemble",
+    "total_features": 90
+  },
+  "performance": {
+    "best_model": "lgb",
+    "best_accuracy": 0.7729083665338645,
+    "best_auc": 0.5205196182396606,
+    "lgb_accuracy": 0.7729083665338645,
+    "lgb_auc": 0.5205196182396606,
+    "ensemble_accuracy": 0.7729083665338645,
+    "ensemble_auc": 0.5333510074231177,
+    "cv_scores": {
+      "lgb_cv_mean": 0.9307860262008735,
+      "lgb_cv_std": 0.017513684528647704,
+      "ensemble_cv_mean": 0.9325480732398681,
+      "ensemble_cv_std": 0.013577513479861593
+    },
+    "training_time": 29.525563955307007
+  },
+  "feature_analysis": {
+    "top_10_features": [
+      {
+        "feature": "StandardScale_Feature_9",
+        "importance": 295
+      },
+      {
+        "feature": "StandardScale_Feature_18",
+        "importance": 287
+      },
+      {
+        "feature": "StandardScale_Feature_11",
+        "importance": 278
+      },
+      {
+        "feature": "StandardScale_Feature_43",
+        "importance": 269
+      },
+      {
+        "feature": "StandardScale_Feature_45",
+        "importance": 265
+      },
+      {
+        "feature": "StandardScale_Feature_30",
+        "importance": 244
+      },
+      {
+        "feature": "StandardScale_Feature_8",
+        "importance": 232
+      },
+      {
+        "feature": "StandardScale_Feature_44",
+        "importance": 226
+      },
+      {
+        "feature": "StandardScale_Feature_29",
+        "importance": 218
+      },
+      {
+        "feature": "StandardScale_Feature_36",
+        "importance": 203
+      }
+    ],
+    "scaling_importance": {
+      "standard_total": "4756",
+      "minmax_total": "2199"
+    }
+  },
+  "preprocessing_details": {
+    "msc_applied": true,
+    "sg_window_length": 15,
+    "sg_polyorder": 2,
+    "derivatives_applied": true,
+    "n_original_features": 300,
+    "n_selected_features": 45,
+    "n_final_features": 90,
+    "feature_selection_method": "mutual_info",
+    "wavelength_range": [
+      374.14,
+      1015.32
+    ],
+    "scaling_methods": [
+      "StandardScaler",
+      "MinMaxScaler"
+    ],
+    "mortality_specific_features": 28
+  },
+  "model_parameters": {
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "boosting_type": "gbdt",
+    "num_leaves": 63,
+    "learning_rate": 0.1,
+    "feature_fraction": 0.8,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 5,
+    "min_child_samples": 20,
+    "min_child_weight": 0.001,
+    "reg_alpha": 0.1,
+    "reg_lambda": 0.5,
+    "random_state": 42,
+    "n_jobs": -1,
+    "verbose": -1
+  }
+}

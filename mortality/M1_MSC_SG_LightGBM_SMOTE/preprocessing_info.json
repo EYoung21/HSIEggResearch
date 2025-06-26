@@ -1,0 +1,19 @@
+{
+  "msc_applied": true,
+  "sg_window_length": 15,
+  "sg_polyorder": 2,
+  "derivatives_applied": true,
+  "n_original_features": 300,
+  "n_selected_features": 45,
+  "n_final_features": 90,
+  "feature_selection_method": "mutual_info",
+  "wavelength_range": [
+    374.14,
+    1015.32
+  ],
+  "scaling_methods": [
+    "StandardScaler",
+    "MinMaxScaler"
+  ],
+  "mortality_specific_features": 28
+}

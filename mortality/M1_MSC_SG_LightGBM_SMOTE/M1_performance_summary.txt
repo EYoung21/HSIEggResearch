@@ -1,0 +1,23 @@
+
+M1 MORTALITY CLASSIFICATION - PERFORMANCE SUMMARY
+============================================================
+Methodology: MSC + SG + LightGBM + SMOTE-ENN
+
+RESULTS:
+- Best Model: lgb
+- Best Accuracy: 0.7729 (77.29%)
+- Best AUC: 0.5205
+- LightGBM Accuracy: 0.7729
+- Ensemble Accuracy: 0.7729
+- Cross-Validation: 0.9308 ± 0.0175
+
+PREPROCESSING:
+- Original Features: 300
+- Selected Features: 45
+- Final Features: 90
+- Feature Selection: mutual_info
+- Class Balancing: SMOTE-ENN
+
+TRAINING:
+- Training Time: 29.53 seconds
+- Algorithm: LightGBM + Ensemble Voting
