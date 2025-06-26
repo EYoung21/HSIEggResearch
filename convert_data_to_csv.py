@@ -5,7 +5,7 @@ def convert_excel_to_csv():
     """
     Convert Excel sheets to CSV files for machine learning modeling
     """
-    excel_file = "/Users/eliyoung/HSIEggResearch/HSI egg data_Poultry farm exp_Master file (1).xlsx"
+    excel_file = "HSI egg data_Poultry farm exp_Master file.xlsx"
     
     print("Converting Excel file to CSV format...")
     
