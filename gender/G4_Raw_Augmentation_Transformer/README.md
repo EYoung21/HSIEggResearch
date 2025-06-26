@@ -160,22 +160,51 @@ learning_rate       # Learning rate: 0.0005-0.002
 
 ---
 
-## 📊 **Expected Performance**
+## 📊 **Key Results**
 
-Based on advanced methodology and augmentation:
+### **🏆 Performance Summary**
+- **Status**: Experiment in development
+- **Expected Test Accuracy**: 58-72%
+- **Expected Training Time**: 30-90 minutes
+- **Dataset**: 1,074 samples (859 training, 215 test)
 
-| Metric | Expected Range | Notes |
-|--------|---------------|-------|
-| **CV Accuracy** | 60-75% | Cross-validation with augmentation |
-| **Test Accuracy** | 58-72% | Final model evaluation |
-| **Training Time** | 30-90 min | Depends on architecture search |
-| **Model Size** | 0.5-5 MB | Transformer architecture dependent |
+### **🎯 Expected Performance Targets**
+| Metric | Expected Range | Innovation Factor |
+|--------|---------------|-------------------|
+| **CV Accuracy** | 60-75% | Data augmentation + attention |
+| **Test Accuracy** | 58-72% | Raw preservation + transformer |
+| **Training Time** | 30-90 min | Architecture search dependent |
+| **Model Size** | 0.5-5 MB | Transformer complexity |
 
-**Performance Factors:**
-- **Data augmentation** addresses class imbalance effectively
-- **Transformer attention** learns complex spectral relationships
-- **Raw information** preserves maximum signal content
-- **Hyperparameter optimization** finds optimal architecture
+### **🔬 Technical Innovation Preview**
+- **Minimal Preprocessing**: Preserves maximum spectral information
+- **8-Technique Augmentation**: Addresses class imbalance comprehensively
+- **Transformer Architecture**: Multi-head self-attention for spectral patterns
+- **Raw Information**: Complete 300-wavelength retention
+
+### **📈 Augmentation Strategy**
+| Technique | Purpose | Effect |
+|-----------|---------|---------|
+| **Gaussian Noise** | Measurement variation simulation | Robustness |
+| **Spectral Shift** | Calibration differences | Generalization |
+| **Intensity Scaling** | Illumination variation | Normalization |
+| **Baseline Drift** | Instrument variation | Stability |
+| **Spectral Smoothing** | Acquisition differences | Consistency |
+| **Spectral Warping** | Non-linear variations | Flexibility |
+| **Mixup** | Sample interpolation | Regularization |
+| **Cutout** | Spectral dropout | Overfitting prevention |
+
+### **⚙️ Architecture Configuration**
+- **Multi-Head Attention**: 4-8 heads for parallel pattern learning
+- **Positional Encoding**: Sinusoidal wavelength position information
+- **Feed-Forward Networks**: Non-linear spectral transformations
+- **Global Pooling**: Average + Max pooling for sequence aggregation
+
+### **🎯 Expected Advantages**
+- **Class Balance**: Comprehensive augmentation addresses imbalance
+- **Attention Mechanism**: Learns complex spectral relationships
+- **Raw Preservation**: No information loss from preprocessing
+- **Interpretability**: Attention weights reveal important wavelengths
 
 ---
 

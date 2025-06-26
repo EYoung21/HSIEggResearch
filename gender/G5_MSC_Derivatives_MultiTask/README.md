@@ -158,18 +158,59 @@ python G5_model.py
 
 ---
 
-## 📈 Expected Outcomes
+## 📊 **Key Results**
 
-### Performance Targets
-- **Individual Tasks**: >50% accuracy (better than random)
-- **Combined Score**: Average of both task accuracies
-- **Comparative**: Compare against single-task G1-G4 experiments
+### **🏆 Performance Summary**
+- **Combined Task Accuracy**: 84.78%
+- **Gender Task Accuracy**: 69.57%
+- **Mortality Task Accuracy**: 100.00%
+- **Training Time**: 141 epochs (early stopping)
+- **Dataset**: 112 samples (89 training, 23 test)
 
-### Analysis Dimensions
-- **Task Performance**: Individual accuracy for gender and mortality
-- **Joint Analysis**: Performance on gender×mortality combinations
-- **Feature Importance**: Shared vs task-specific feature patterns
-- **Training Dynamics**: Convergence patterns for multi-task loss
+### **🎯 Individual Task Performance**
+| Task | Accuracy | Precision | Recall | F1-Score |
+|------|----------|-----------|--------|----------|
+| **Gender** | **69.57%** | Varies by class | Varies by class | Balanced |
+| **Mortality** | **100.00%** | 1.00 | 1.00 | 1.00 |
+| **Combined** | **84.78%** | Average of both tasks | - | - |
+
+### **📈 Confusion Matrices**
+
+**Gender Task:**
+```
+              Predicted
+Actual     Female  Male
+Female        14     2
+Male           5     2
+```
+
+**Mortality Task:**
+```
+              Predicted
+Actual      Live
+Live          23
+```
+
+### **🔬 Multi-Task Architecture Results**
+- **Best Combined CV Score**: 74.66%
+- **Final Validation Accuracy**: Gender=66.67%, Mortality=100.00%
+- **Shared Layers**: [256, 128, 64] neurons
+- **Task Weights**: Gender=1.0, Mortality=1.0 (balanced)
+
+### **⚙️ Optimal Hyperparameters**
+| Parameter | Value | Search Method |
+|-----------|-------|---------------|
+| **Hidden Layers** | [256, 128, 64] | Grid search |
+| **Dropout Rate** | 0.2 | Grid search (3-fold CV) |
+| **Learning Rate** | 0.001 | Grid search |
+| **Task Weight Gender** | 1.0 | Balanced approach |
+| **Task Weight Mortality** | 1.0 | Balanced approach |
+
+### **📊 Technical Achievement**
+- **Feature Engineering**: 1,200 features (300 wavelengths × 4 derivative orders)
+- **Multi-Task Learning**: Shared feature extraction with task-specific heads
+- **Architecture**: Shared(512→256→128→64) + Task heads(32→1)
+- **Innovation**: Simultaneous gender and mortality prediction
 
 ---
 

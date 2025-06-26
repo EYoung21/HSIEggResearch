@@ -149,22 +149,54 @@ learning_rate       # Learning rate: 0.0005-0.002
 
 ---
 
-## 📊 **Expected Performance**
+## 📊 **Key Results**
 
-Based on methodology complexity and feature representation:
+### **🏆 Performance Summary**
+- **Test Accuracy**: 53.95%
+- **Best CV Score**: 53.78%
+- **Final Validation Accuracy**: 54.07%
+- **Training Time**: 15-45 minutes
+- **Dataset**: 1,074 samples (859 training, 215 test)
 
-| Metric | Expected Range | Notes |
-|--------|---------------|-------|
-| **CV Accuracy** | 55-65% | Cross-validation performance |
-| **Test Accuracy** | 52-62% | Final model evaluation |
-| **Training Time** | 15-45 min | Depends on hyperparameter search |
-| **Model Size** | 1-10 MB | CNN architecture dependent |
+### **🎯 Model Performance**
+| Metric | Value | Notes |
+|--------|-------|-------|
+| **CNN Test Accuracy** | **53.95%** | Final model evaluation |
+| **Training Epochs** | 17 | Early stopping applied |
+| **Input Shape** | (2, 163) + 1 channel | 2D wavelet coefficient grids |
+| **Model Size** | ~1-5 MB | CNN architecture dependent |
 
-**Performance Factors:**
-- **Wavelet coefficients** capture non-linear spectral patterns
-- **CNN spatial learning** from 2D coefficient grids
-- **EMSC preprocessing** reduces instrumental artifacts
-- **Hyperparameter optimization** finds optimal architecture
+### **📈 Confusion Matrix**
+```
+              Predicted
+Actual     Female  Male
+Female       116     0
+Male          99     0
+```
+
+**⚠️ Analysis**: Similar to G1, model shows class imbalance issues predicting only Female class.
+
+### **🔬 CNN Architecture Details**
+- **Convolutional Layers**: 2
+- **Starting Filters**: 16
+- **Dropout Rate**: 0.2
+- **Dense Units**: 64
+- **Learning Rate**: 0.001
+
+### **⚙️ Optimal Hyperparameters**
+| Parameter | Value | Search Range |
+|-----------|-------|--------------|
+| **conv_layers** | 2 | 2-4 |
+| **filters_start** | 16 | 16-64 |
+| **dropout_rate** | 0.2 | 0.2-0.4 |
+| **dense_units** | 64 | 64-256 |
+| **learning_rate** | 0.001 | 0.0005-0.002 |
+
+### **📊 Technical Innovation**
+- **EMSC Preprocessing**: Superior scatter correction vs MSC/SNV
+- **Wavelet Transform**: Daubechies 4, 4 decomposition levels
+- **2D CNN**: Learns spatial patterns in coefficient grids
+- **Grid Search**: 3-fold CV with 5 parameter combinations
 
 ---
 
