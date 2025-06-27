@@ -1,0 +1,45 @@
+
+M4 MORTALITY CLASSIFICATION - TRANSFER LEARNING PERFORMANCE SUMMARY
+=================================================================
+
+METHODOLOGY:
+- Preprocessing: Raw spectra with minimal processing
+- Models: Transfer Learning (Neural Network, SVM, Random Forest, Deep Adaptation)
+- Class Balancing: SMOTE-ENN
+- Transfer Strategy: feature_extraction
+- Feature Extraction: PCA-based (50 components)
+
+DATASET:
+- Samples: 4168
+- Features: 100 enhanced features
+- Wavelength Range: 374.14 - 1015.32 nm
+
+TRAINING PERFORMANCE:
+- Training Time: 4.47 seconds
+- Transfer Components: 50
+- Explained Variance: 1.000
+
+CROSS-VALIDATION SCORES:
+- Neural Network: 0.5000 ± 0.0000
+- Svm Transfer: 0.5000 ± 0.0000
+- Random Forest: 0.5000 ± 0.0000
+- Deep Adaptation: 0.5000 ± 0.0000
+
+TEST PERFORMANCE:
+- Best Model: Random Forest
+- Test Accuracy: 0.7572
+- Test AUC: 0.4492
+
+INDIVIDUAL MODEL RESULTS:
+- Neural Network: 0.7332 (AUC: 0.4960)
+- Svm Transfer: 0.7418 (AUC: 0.4982)
+- Random Forest: 0.7572 (AUC: 0.4492)
+- Deep Adaptation: 0.7255 (AUC: 0.4841)
+
+TRANSFER LEARNING INSIGHTS:
+- Feature Extraction: PCA-based transfer learning
+- Domain Adaptation: Neural network and ensemble approaches
+- Raw Data Processing: Minimal preprocessing preserves spectral information
+- Class Balancing: SMOTE-ENN handles mortality class imbalance
+
+Generated: 2025-06-27 12:15:24
