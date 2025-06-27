@@ -157,14 +157,14 @@ pip install -r requirements.txt
 ## Comparison with Other Methods
 
 ### Major Improvements over M1 (MSC + LightGBM + SMOTE)
-- **Accuracy Improvement**: 93.48% vs M1's 53.95% (**75% improvement!**)
+- **Accuracy Improvement**: 93.48% vs M1's 77.29% (**21% improvement**)
 - **Better Feature Engineering**: SNV + derivatives vs MSC alone
 - **Ensemble Advantage**: Multiple optimized models vs single LightGBM
 - **Enhanced Class Balancing**: SMOTE-ENN vs SMOTE alone
-- **Feature Richness**: 912 enhanced features vs 600 dual-scale features
+- **Feature Richness**: 912 enhanced features vs 90 dual-scale features
 
 ### Achieved Improvements
-- **Dramatically Higher Accuracy**: 93.48% vs 53.95% (M1 suffered from majority class prediction)
+- **Significantly Higher Accuracy**: 93.48% vs 77.29% (21% improvement over M1)
 - **Superior Generalization**: Ensemble of 3 diverse models vs single algorithm
 - **Better Feature Insights**: Combined RF and XGB importance analysis
 - **Robust Performance**: Consistent CV results across all models
