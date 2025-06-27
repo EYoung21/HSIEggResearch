@@ -129,7 +129,7 @@ Input: (n_wavelengths, 6_channels)
 ✅ **Robust Training**: Early stopping and learning rate scheduling worked effectively  
 
 ### Comparison with Previous Experiments
-- **M1 (MSC+SG+LightGBM)**: 53.95% → **M3: 92.39%** (**+75% improvement**)
+- **M1 (MSC+SG+LightGBM)**: 77.29% → **M3: 92.39%** (**+20% improvement**)
 - **M2 (SNV+Derivatives+Ensemble)**: 93.48% → **M3: 92.39%** (comparable performance)
 
 ### Technical Insights
