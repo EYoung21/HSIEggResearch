@@ -1,0 +1,20 @@
+{
+  "experiment_metadata": {
+    "experiment_name": "M7_SNV_Mixup_SemiSupervised",
+    "total_runtime_seconds": 27.30797505378723,
+    "timestamp": "2025-06-27T12:46:08.579489",
+    "n_samples_total": 5210,
+    "n_features_original": 300,
+    "n_features_processed": 370
+  },
+  "preprocessing": {
+    "n_samples": 4168,
+    "n_wavelengths": 300,
+    "wavelength_range": "374.14 - 1015.32 nm",
+    "original_shape": [
+      4168,
+      300
+    ],
+    "preprocessing_method": "SNV + Mixup + Semi-Supervised",
+    "class_distribution": {
+      
