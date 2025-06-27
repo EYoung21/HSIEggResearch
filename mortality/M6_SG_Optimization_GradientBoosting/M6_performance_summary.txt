@@ -1,0 +1,39 @@
+
+M6 EXPERIMENT SUMMARY: SG + Optimization + Gradient Boosting
+==========================================================
+
+METHODOLOGY:
+- Preprocessing: Optimized Savitzky-Golay + Morphological features
+- Algorithm: Advanced Gradient Boosting (Sklearn/XGBoost/LightGBM)
+- Optimization: Extensive hyperparameter search
+- Features: 400 optimized features
+
+BEST MODEL: lightgbm
+
+PERFORMANCE:
+- Test Accuracy: 0.7610
+- Test AUC: 0.5784
+- Training Time: 1826.48 seconds
+- Optimization Time: 1707.72 seconds
+
+CROSS-VALIDATION SCORES:
+- sklearn_gb: 0.8888 ± 0.0230
+- xgboost: 0.8888 ± 0.0225
+- lightgbm: 0.8991 ± 0.0176
+
+OPTIMIZATION DETAILS:
+- Sklearn GB params: {'learning_rate': 0.08, 'max_depth': 6, 'max_features': None, 'min_samples_leaf': 4, 'min_samples_split': 20, 'n_estimators': 100, 'subsample': 0.9}
+- XGBoost params: {'colsample_bytree': np.float64(0.9788994309535435), 'gamma': np.float64(0.49300053191143545), 'learning_rate': np.float64(0.22847967372509306), 'max_depth': 8, 'min_child_weight': 3, 'n_estimators': 463, 'reg_alpha': np.float64(1.11680849947161), 'reg_lambda': np.float64(2.696888036987905), 'subsample': np.float64(0.9625417540378944)}
+- LightGBM params: {'colsample_bytree': np.float64(0.8483222737688365), 'learning_rate': np.float64(0.11074988838537012), 'max_depth': 13, 'min_child_samples': 20, 'min_split_gain': np.float64(0.007586332810866393), 'n_estimators': 348, 'num_leaves': 99, 'reg_alpha': np.float64(0.3038053870245887), 'reg_lambda': np.float64(1.5553086905976405), 'subsample': np.float64(0.8563498979212858)}
+
+FILES GENERATED:
+- M6_lightgbm_model.pkl (best model)
+- M6_all_gradient_boosting_models.pkl (all models)
+- M6_experimental_results.json (complete results)
+- M6_performance_summary.txt (this summary)
+
+NOTES:
+- Extensive optimization across 3 gradient boosting algorithms
+- Morphological features enhance spectral information
+- lightgbm selected as best performing model
+- Class balancing with SMOTE-ENN addresses mortality imbalance

@@ -1,0 +1,19 @@
+{
+  "method": "SG_Optimization_Morphological",
+  "wavelength_range": [
+    374.14,
+    1015.32
+  ],
+  "n_original_features": 300,
+  "n_final_features": 400,
+  "sg_window_length": 19,
+  "sg_polyorder": 3,
+  "sg_optimized": true,
+  "morphological_enabled": true,
+  "n_morphological_features": 18,
+  "feature_selection_method": "mutual_info_classif",
+  "scaling_methods": [
+    "StandardScaler",
+    "RobustScaler"
+  ]
+}
