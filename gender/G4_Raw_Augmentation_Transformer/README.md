@@ -160,44 +160,125 @@ learning_rate       # Learning rate: 0.0005-0.002
 
 ---
 
-## 📊 **Key Results**
+## 📊 **Results**
 
 ### **🏆 Performance Summary**
-- **Status**: Experiment in development
-- **Expected Test Accuracy**: 58-72%
-- **Expected Training Time**: 30-90 minutes
-- **Dataset**: 1,074 samples (859 training, 215 test)
+- **Test Accuracy**: 46.05%
+- **Cross-Validation Score**: 50.00%
+- **Training Epochs**: 22
+- **Optimization Trials**: 12
 
-### **🎯 Expected Performance Targets**
-| Metric | Expected Range | Innovation Factor |
-|--------|---------------|-------------------|
-| **CV Accuracy** | 60-75% | Data augmentation + attention |
-| **Test Accuracy** | 58-72% | Raw preservation + transformer |
-| **Training Time** | 30-90 min | Architecture search dependent |
-| **Model Size** | 0.5-5 MB | Transformer complexity |
+| **Metric** | **Value** | **Details** |
+|------------|-----------|-------------|
+| **Test Accuracy** | **46.05%** | Final model performance |
+| **CV Accuracy** | **50.00%** | Best cross-validation score |
+| **Training Samples** | **924** | (462 original + augmentation) |
+| **Test Samples** | **215** | Independent test set |
+| **Sequence Length** | **300** | Complete wavelength range |
 
-### **🔬 Technical Innovation Preview**
-- **Minimal Preprocessing**: Preserves maximum spectral information
-- **8-Technique Augmentation**: Addresses class imbalance comprehensively
-- **Transformer Architecture**: Multi-head self-attention for spectral patterns
-- **Raw Information**: Complete 300-wavelength retention
+### **🔬 Technical Results**
 
-### **📈 Augmentation Strategy**
-| Technique | Purpose | Effect |
-|-----------|---------|---------|
-| **Gaussian Noise** | Measurement variation simulation | Robustness |
-| **Spectral Shift** | Calibration differences | Generalization |
-| **Intensity Scaling** | Illumination variation | Normalization |
-| **Baseline Drift** | Instrument variation | Stability |
-| **Spectral Smoothing** | Acquisition differences | Consistency |
-| **Spectral Warping** | Non-linear variations | Flexibility |
-| **Mixup** | Sample interpolation | Regularization |
-| **Cutout** | Spectral dropout | Overfitting prevention |
+**Transformer Architecture (Optimized):**
+- **Embedding Dimension**: 64
+- **Attention Heads**: 4
+- **Feed-Forward Dimension**: 128
+- **Transformer Layers**: 2
+- **Dropout Rate**: 0.1
+- **Learning Rate**: 0.001
 
-### **⚙️ Architecture Configuration**
-- **Multi-Head Attention**: 4-8 heads for parallel pattern learning
-- **Positional Encoding**: Sinusoidal wavelength position information
-- **Feed-Forward Networks**: Non-linear spectral transformations
+**Training Performance:**
+- **Final Training Accuracy**: 50.07%
+- **Final Validation Accuracy**: 49.73%
+- **Training Loss**: 0.693 (stable)
+- **Validation Loss**: 0.693 (stable)
+
+### **📈 Confusion Matrix Analysis**
+
+| **Actual \\ Predicted** | **Female** | **Male** | **Total** |
+|-------------------------|------------|----------|-----------|
+| **Female** | 0 | 116 | 116 |
+| **Male** | 0 | 99 | 99 |
+| **Total** | 0 | 215 | 215 |
+
+**❌ Critical Issue Identified:**
+- **Severe class imbalance**: Model predicts ALL samples as Male
+- **Zero female predictions**: Complete bias toward majority class
+- **Precision**: 0% for Female class
+- **Recall**: 0% for Female class
+
+### **📊 Feature Analysis**
+
+**Data Augmentation Results:**
+| **Original Samples** | **Augmented Samples** | **Augmentation Factor** |
+|---------------------|----------------------|------------------------|
+| 462 | 924 | 2x |
+
+**Augmentation Techniques Applied:**
+- ✓ Gaussian Noise (measurement simulation)
+- ✓ Spectral Shift (calibration variation)
+- ✓ Intensity Scaling (illumination differences)
+- ✓ Baseline Drift (instrument variation)
+- ✓ Spectral Smoothing (acquisition settings)
+- ✓ Spectral Warping (non-linear variations)
+- ✓ Mixup Augmentation (sample interpolation)
+- ✓ Cutout Augmentation (spectral dropout)
+
+### **⚙️ Configuration Details**
+
+**Hyperparameter Optimization:**
+- **Method**: Grid search with 3-fold cross-validation
+- **Search Space**: 12 parameter combinations tested
+- **Best Parameters**: Early convergence to simple architecture
+
+**Model Architecture Search Results:**
+| Parameter | Tested Range | Optimal Value |
+|-----------|--------------|---------------|
+| Embedding Dim | 64-160 | 64 |
+| Attention Heads | 4-8 | 4 |
+| FF Dimension | 128-320 | 128 |
+| Layers | 2-4 | 2 |
+| Dropout | 0.1-0.2 | 0.1 |
+| Learning Rate | 0.0005-0.002 | 0.001 |
+
+### **📁 Files Generated**
+
+✓ **G4_transformer_model.h5** - Trained Transformer model (46.05% accuracy)  
+✓ **G4_experimental_results.json** - Complete experimental metrics  
+✓ **G4_model_metadata.json** - Model architecture and parameters  
+✓ **test_predictions.csv** - Individual test sample predictions  
+✓ **G4_performance_summary.txt** - Human-readable results summary  
+
+### **🔧 Recommendations**
+
+**Immediate Issues:**
+1. **Class Imbalance**: Despite augmentation, severe prediction bias remains
+2. **Model Convergence**: Loss plateaued quickly, suggesting optimization issues
+3. **Architecture Complexity**: Simple 2-layer Transformer may be insufficient
+
+**Suggested Improvements:**
+1. **Advanced Balancing**: SMOTE, class weights, focal loss
+2. **Architecture Enhancement**: Deeper networks, residual connections
+3. **Regularization**: Different dropout strategies, early stopping
+4. **Loss Function**: Weighted loss, focal loss for imbalanced classes
+
+### **📋 Conclusions**
+
+**❌ Experiment Outcome**: **UNSUCCESSFUL**
+- Transformer architecture with data augmentation failed to achieve gender classification
+- Severe class imbalance persists despite comprehensive augmentation suite
+- Model shows complete bias toward predicting Male class (99/215 actual distribution)
+
+**🔬 Technical Insights**:
+- **Raw information preservation** alone insufficient for gender differences
+- **Transformer attention mechanism** may require more complex architecture
+- **Data augmentation** did not effectively address fundamental class imbalance
+- **Spectral patterns** for gender classification require different approach
+
+**🚀 Future Directions**:
+- Implement class-weighted loss functions
+- Explore ensemble methods combining multiple architectures
+- Consider domain-specific preprocessing techniques
+- Investigate biological feature engineering approaches
 - **Global Pooling**: Average + Max pooling for sequence aggregation
 
 ### **🎯 Expected Advantages**
