@@ -129,6 +129,27 @@ M7 | SNV + mixup            | Semi-supervised        | Texture + spectral     | 
 M8 | Multiple derivatives   | Conformal prediction   | Uncertainty bounds     | 80.33%
 ```
 
+### Combined (Gender + Mortality) Experiments
+```
+ID | Preprocessing           | Algorithm              | Features                | Priority  
+---|------------------------|------------------------|-------------------------|----------
+C1 | MSC + SG combination   | Multi-task deep net    | Shared representations | HIGH
+C2 | SNV + derivatives      | Ensemble multi-output  | Biology-informed       | HIGH
+C3 | EMSC + wavelets        | Transfer + fine-tune   | Cross-task features    | MED
+C4 | Augmentation suite     | Attention mechanisms   | Wavelength importance  | MED
+C5 | Optimized preprocessing| Hierarchical learning  | Task-specific heads    | HIGH
+C6 | Multiple corrections   | Meta-learning          | Few-shot adaptation    | LOW
+C7 | Advanced derivatives   | Neural architecture    | Automated design       | LOW
+C8 | Domain adaptation      | Uncertainty + ensemble | Confidence intervals   | MED
+```
+
+**Priority Key:**
+- **HIGH**: Expected >10% accuracy improvement, established techniques
+- **MED**: Moderate improvement potential, some novelty  
+- **LOW**: Exploratory, high novelty but uncertain gains
+
+**Recommended execution order:** C1, C2, C5, C3, C4, C8
+
 **Performance Summary:**
 - **Best Gender Classification**: G5 (Multi-Task) at 69.57%
 - **Best Single-Task Gender**: G6 (SNV + Transfer Learning) at 54.88%
