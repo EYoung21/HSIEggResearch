@@ -1,0 +1,20 @@
+{
+  "experiment_metadata": {
+    "experiment_name": "M8_MultiDerivatives_Conformal",
+    "total_runtime_seconds": 40.49392628669739,
+    "timestamp": "2025-06-27T13:15:54.750300",
+    "n_samples_total": 5210,
+    "n_features_original": 300,
+    "n_features_processed": 117
+  },
+  "preprocessing": {
+    "n_samples": 4168,
+    "n_wavelengths": 300,
+    "wavelength_range": "374.14 - 1015.32 nm",
+    "original_shape": [
+      4168,
+      300
+    ],
+    "preprocessing_method": "Multi-Derivatives + Conformal",
+    "class_distribution": {
+      
